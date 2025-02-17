@@ -32,6 +32,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     padding: 20px;
+    position: relative;
 }
 
 /* Header */
@@ -96,6 +97,7 @@ body {
     border: 1px solid #666;
     padding: 8px;
     cursor: pointer;
+    position: relative;
 }
 
 .language-options {
@@ -106,6 +108,7 @@ body {
     margin-top: 10px;
     border-radius: 5px;
     z-index: 100;
+    width: 200px;
 }
 
 .language-options button {
@@ -128,6 +131,9 @@ textarea {
     border-radius: 5px;
     border: none;
     margin-bottom: 10px;
+    background-color: #333;
+    color: white;
+    resize: none;
 }
 
 button {
@@ -148,5 +154,17 @@ button:hover {
     .chat-container {
         width: 100%;
         padding: 10px;
+    }
+}
+
+/* Desktop (Laptop) view */
+@media screen and (min-width: 768px) {
+    .chat-container {
+        width: 80%;
+        padding: 20px;
+        max-width: 700px;
+    }
+    .chat-box {
+        max-height: 450px;
     }
 }
