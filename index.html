@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhashini Translator</title>
+    <title>Bhashini Translator Chatbot</title>
     <script defer src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark">
+<body>
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">💡</button>
+    </div>
+
     <div class="chat-container">
-        <div class="chat-header">
-            <h2>Bhashini Translator</h2>
-            <button id="themeToggle">💡</button>
-        </div>
-
-        <div class="chat-box" id="chatBox">
-            <!-- Chat history will go here -->
-        </div>
-
+        <div id="chat" class="chat-box"></div>
+        
         <div class="input-container">
-            <div class="language-selector" id="languageSelector">
-                <button id="languageBtn">Select Language</button>
-                <div class="language-options" id="languageOptions">
-                    <button onclick="selectLanguage('ta')">Tamil</button>
-                    <button onclick="selectLanguage('te')">Telugu</button>
-                    <button onclick="selectLanguage('kn')">Kannada</button>
-                    <button onclick="selectLanguage('mr')">Marathi</button>
-                </div>
-            </div>
             <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
-            <button id="sendBtn" onclick="translateText()" disabled>Send</button>
+            
+            <!-- Language Button next to Send button -->
+            <button class="language-button" onclick="toggleLanguageOptions()">🌐</button>
+            <button onclick="sendMessage()">Send</button>
         </div>
+
+        <!-- Language Selection Menu -->
+        <ul id="language-options" class="language-options">
+            <li><button onclick="setLanguage('ta')">Tamil</button></li>
+            <li><button onclick="setLanguage('te')">Telugu</button></li>
+            <li><button onclick="setLanguage('kn')">Kannada</button></li>
+            <li><button onclick="setLanguage('mr')">Marathi</button></li>
+        </ul>
     </div>
 </body>
 </html>
