@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhashini Translator Chatbot</title>
+    <title>Bhashini Translator</title>
     <script defer src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="theme-toggle-container">
-        <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">💡</button>
-    </div>
-
+<body class="dark">
     <div class="chat-container">
-        <div id="chat" class="chat-box"></div>
-        
-        <div class="input-container">
-            <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
-            
-            <!-- Language Button next to Send button -->
-            <button class="language-button" onclick="toggleLanguageOptions()">🌐</button>
-            <button onclick="sendMessage()">Send</button>
+        <div class="chat-header">
+            <h2>Bhashini Translator</h2>
+            <button id="themeToggle" onclick="toggleTheme()">💡</button>
         </div>
 
-        <!-- Language Selection Menu -->
-        <ul id="language-options" class="language-options">
-            <li><button onclick="setLanguage('ta')">Tamil</button></li>
-            <li><button onclick="setLanguage('te')">Telugu</button></li>
-            <li><button onclick="setLanguage('kn')">Kannada</button></li>
-            <li><button onclick="setLanguage('mr')">Marathi</button></li>
-        </ul>
+        <div id="chat" class="chat-box"></div>
+
+        <div class="input-container">
+            <div class="language-selector">
+                <button id="languageBtn" onclick="toggleLanguageList()">+ Language</button>
+                <div id="language-options" class="language-options">
+                    <button onclick="setLanguage('ta')">Tamil</button>
+                    <button onclick="setLanguage('te')">Telugu</button>
+                    <button onclick="setLanguage('kn')">Kannada</button>
+                    <button onclick="setLanguage('mr')">Marathi</button>
+                </div>
+            </div>
+            <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
+            <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
     </div>
 </body>
 </html>
