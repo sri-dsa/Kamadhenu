@@ -1,4 +1,4 @@
-const BHASHINI_HOST = "https://dhruva-api.bhashini.gov.in";
+const BHASHINI_HOST = "https://dhruva.bhashini.gov.in";
 const TRANSLATION_ENDPOINT = "/services/inference/pipeline";
 
 // API Keys (⚠️ Keep these secure in production)
