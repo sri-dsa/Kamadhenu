@@ -9,9 +9,7 @@
 </head>
 <body>
     <div class="theme-toggle-container">
-        <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">
-            💡
-        </button>
+        <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">💡</button>
     </div>
 
     <div class="chat-container">
@@ -20,14 +18,12 @@
         <!-- Language Selection with Expandable Button -->
         <div class="language-select-container">
             <button class="expandable-button" onclick="toggleLanguageOptions()">Select Language</button>
-            <div id="language-options" class="language-options">
-                <select id="targetLanguage">
-                    <option value="ta">Tamil</option>
-                    <option value="te">Telugu</option>
-                    <option value="kn">Kannada</option>
-                    <option value="mr">Marathi</option>
-                </select>
-            </div>
+            <ul id="language-options" class="language-options">
+                <li><button onclick="setLanguage('ta')">Tamil</button></li>
+                <li><button onclick="setLanguage('te')">Telugu</button></li>
+                <li><button onclick="setLanguage('kn')">Kannada</button></li>
+                <li><button onclick="setLanguage('mr')">Marathi</button></li>
+            </ul>
         </div>
 
         <div class="input-container">
