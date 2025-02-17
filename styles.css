@@ -41,7 +41,7 @@ body.dark-theme .theme-toggle-button {
 /* Chatbox container */
 .chat-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -50,6 +50,7 @@ body.dark-theme .theme-toggle-button {
     position: relative;
     display: flex;
     flex-direction: column;
+    margin-top: 50px; /* Add margin for top spacing */
 }
 
 /* Dark theme chatbox */
@@ -152,7 +153,37 @@ body.dark-theme .expandable-button:hover {
 
 .language-options {
     display: none;
-    margin-top: 10px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.language-options li {
+    margin: 5px 0;
+}
+
+.language-options li button {
+    background-color: #f4f4f9;
+    border: none;
+    color: #333;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.language-options li button:hover {
+    background-color: #e2e2e2;
+}
+
+body.dark-theme .language-options li button {
+    background-color: #444;
+    color: #f4f4f9;
+}
+
+body.dark-theme .language-options li button:hover {
+    background-color: #333;
 }
 
 /* Media Queries for responsiveness */
