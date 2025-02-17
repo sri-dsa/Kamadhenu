@@ -1,63 +1,63 @@
-const BHASHINI_HOST = "https://dhruva.bhashini.gov.in";
-const TRANSLATION_ENDPOINT = "/services/inference/pipeline";
+const BHASHINI_API = "https://dhruva-api.bhashini.gov.in/services/inference/web-pipeline";
 const INFERENCE_API_KEY = "7tT86lGiAXxwRvTjvpYjBrtcejxHinFa-6Jb_yQwaJMz1P3NNcYZvQPOXpmPJVEx";
 const UDYAT_KEY = "53150dbcde-5d68-4505-a1e5-5299242d6847";
 
-let selectedLanguage = "";
 let selectedLanguageCode = "";
+let selectedLanguageName = "";
 
-// Function to toggle light/dark themes
+// Toggle Theme
 function toggleTheme() {
-    const body = document.body;
-    const isDark = body.classList.toggle('dark-theme');
-    document.getElementById('theme-toggle').style.backgroundColor = isDark ? 'yellow' : 'yellow';
+    document.body.classList.toggle('dark-theme');
+    document.getElementById('theme-toggle').textContent = 
+        document.body.classList.contains('dark-theme') ? '🌙' : '💡';
 }
 
-// Toggle language options visibility
+// Toggle Language Options
 function toggleLanguageOptions() {
-    const languageOptions = document.getElementById('language-options');
-    languageOptions.style.display = languageOptions.style.display === 'block' ? 'none' : 'block';
+    const menu = document.getElementById('language-options');
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
 
-// Set the selected language
-function setLanguage(languageCode, languageName) {
-    selectedLanguageCode = languageCode;
-    selectedLanguage = languageName;
-    
-    document.getElementById('language-button').innerText = languageName;
+// Set Selected Language
+function setLanguage(code, name) {
+    selectedLanguageCode = code;
+    selectedLanguageName = name;
+
     document.getElementById('language-options').style.display = 'none';
+    document.getElementById('inputText').placeholder = `Translate to ${selectedLanguageName}...`;
+    document.getElementById('sendButton').disabled = false;
+    document.getElementById('inputText').disabled = false;
 }
 
-// Function to send message and get translation
+// Send Message to Bhashini API
 async function sendMessage() {
     const inputText = document.getElementById('inputText').value.trim();
+    
     if (!inputText) {
+        alert(`Translate to ${selectedLanguageName}: Please enter text to translate!`);
         return;
     }
 
-    // Add user message to chat box (Right-aligned)
-    const userMessage = document.createElement("div");
-    userMessage.classList.add("message", "user-message");
-    userMessage.innerHTML = `<strong>Hindi text:</strong> ${inputText}`;
-    document.getElementById("chat").appendChild(userMessage);
-    
-    // Clear input field
+    // Display user message
+    const chatBox = document.getElementById("chat");
+    const userMessage = `<div class="message user-message">${inputText}</div>`;
+    chatBox.innerHTML += userMessage;
     document.getElementById("inputText").value = "";
 
-    // API Call
+    // Translation API Payload
     const payload = {
         input: [{ source: inputText }],
         config: {
             serviceId: "ai4bharat/indictrans-v2",
             language: {
-                sourceLanguage: "hi",
-                targetLanguage: selectedLanguageCode || "ta" // Default Tamil
+                sourceLanguage: "en",
+                targetLanguage: selectedLanguageCode
             }
         }
     };
 
     try {
-        const response = await fetch(BHASHINI_HOST + TRANSLATION_ENDPOINT, {
+        const response = await fetch(BHASHINI_API, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -70,17 +70,15 @@ async function sendMessage() {
         const data = await response.json();
 
         if (data.output) {
-            const botMessage = document.createElement("div");
-            botMessage.classList.add("message", "bot-message");
-            botMessage.innerHTML = `<strong>${selectedLanguage} text:</strong> ${data.output[0].target}`;
-            document.getElementById("chat").appendChild(botMessage);
+            const botMessage = `<div class="message bot-message">${data.output[0].target}</div>`;
+            chatBox.innerHTML += botMessage;
         } else {
-            throw new Error("Invalid API Response");
+            alert(`Translate to ${selectedLanguageName}: Translation failed.`);
         }
+
+        chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
-        const errorMessage = document.createElement("div");
-        errorMessage.classList.add("message", "bot-message", "error-message");
-        errorMessage.innerHTML = `<strong>${selectedLanguage || "Unknown Language"}:</strong> Error in translation`;
-        document.getElementById("chat").appendChild(errorMessage);
+        console.error("Error:", error);
+        alert(`Translate to ${selectedLanguageName}: Error contacting translation service.`);
     }
 }
