@@ -24,39 +24,42 @@ function toggleLanguageOptions() {
     languageOptions.style.display = isVisible ? 'none' : 'block';
 }
 
-// Set selected language and close the language options
-function setLanguage(language) {
-    document.getElementById("targetLanguage").value = language;
-    toggleLanguageOptions(); // Hide the options after selection
+// Set the selected language
+function setLanguage(languageCode) {
+    document.getElementById('language-options').style.display = 'none';
+    document.getElementById('selectedLanguage').innerText = languageCode;
 }
 
-// Function to send message and get response
+// Function to send message and get translation
 async function sendMessage() {
-    const inputText = document.getElementById("inputText").value.trim();
-    const targetLanguage = document.getElementById("targetLanguage").value;
+    const inputText = document.getElementById('inputText').value.trim();
+    const targetLanguage = document.getElementById('selectedLanguage')?.innerText || 'ta'; // Default language is Tamil
 
     if (!inputText) {
         alert("Please enter text to translate!");
         return;
     }
 
-    const chatBox = document.getElementById("chat");
-    
-    // Add user's message to chat box
+    // Add user message to chat box
     const userMessage = document.createElement("div");
     userMessage.classList.add("message", "user-message");
     userMessage.innerText = inputText;
-    chatBox.appendChild(userMessage);
+    document.getElementById("chat").appendChild(userMessage);
+
+    // Clear the input field
+    document.getElementById("inputText").value = "";
 
     // Scroll to the bottom of the chat box
+    const chatBox = document.getElementById("chat");
     chatBox.scrollTop = chatBox.scrollHeight;
 
+    // Call translation API
     const payload = {
         input: [{ source: inputText }],
         config: {
             serviceId: "ai4bharat/indictrans-v2",
             language: {
-                sourceLanguage: "hi",
+                sourceLanguage: "hi", // Assuming Hindi as the source language
                 targetLanguage: targetLanguage
             }
         }
@@ -74,9 +77,8 @@ async function sendMessage() {
         });
 
         const data = await response.json();
-        
+
         if (data.output) {
-            // Add bot's response to chat box
             const botMessage = document.createElement("div");
             botMessage.classList.add("message", "bot-message");
             botMessage.innerText = data.output[0].target;
@@ -91,7 +93,4 @@ async function sendMessage() {
         console.error("🔴 Error:", error);
         alert("Error communicating with the translation service.");
     }
-
-    // Clear the input field
-    document.getElementById("inputText").value = "";
 }
