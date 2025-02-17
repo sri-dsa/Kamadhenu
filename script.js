@@ -17,6 +17,13 @@ function toggleTheme() {
     }
 }
 
+// Toggle language options visibility
+function toggleLanguageOptions() {
+    const languageOptions = document.getElementById('language-options');
+    const isVisible = languageOptions.style.display === 'block';
+    languageOptions.style.display = isVisible ? 'none' : 'block';
+}
+
 // Function to send message and get response
 async function sendMessage() {
     const inputText = document.getElementById("inputText").value.trim();
@@ -77,16 +84,11 @@ async function sendMessage() {
 
         // Scroll to the bottom of the chat box
         chatBox.scrollTop = chatBox.scrollHeight;
-
     } catch (error) {
-        console.error("❌ Translation Error:", error);
-        const botErrorMessage = document.createElement("div");
-        botErrorMessage.classList.add("message", "bot-message");
-        botErrorMessage.innerText = "Translation failed!";
-        chatBox.appendChild(botErrorMessage);
-        chatBox.scrollTop = chatBox.scrollHeight;
+        console.error("🔴 Error:", error);
+        alert("Error communicating with the translation service.");
     }
 
-    // Clear input field
-    document.getElementById("inputText").value = '';
+    // Clear the input field
+    document.getElementById("inputText").value = "";
 }
