@@ -16,14 +16,22 @@
 
     <div class="chat-container">
         <div id="chat" class="chat-box"></div>
+        
+        <!-- Language Selection with Expandable Button -->
+        <div class="language-select-container">
+            <button class="expandable-button" onclick="toggleLanguageOptions()">Select Language</button>
+            <div id="language-options" class="language-options">
+                <select id="targetLanguage">
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="kn">Kannada</option>
+                    <option value="mr">Marathi</option>
+                </select>
+            </div>
+        </div>
+
         <div class="input-container">
             <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
-            <select id="targetLanguage">
-                <option value="ta">Tamil</option>
-                <option value="te">Telugu</option>
-                <option value="kn">Kannada</option>
-                <option value="mr">Marathi</option>
-            </select>
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
