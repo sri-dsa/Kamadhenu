@@ -51,6 +51,7 @@ body.dark-theme .theme-toggle-button {
     display: flex;
     flex-direction: column;
     margin-top: 50px; /* Add margin for top spacing */
+    height: 90vh;
 }
 
 /* Dark theme chatbox */
@@ -67,6 +68,7 @@ body.dark-theme .chat-container {
     max-height: 400px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 /* Individual message */
@@ -93,23 +95,23 @@ body.dark-theme .chat-container {
 /* Input container */
 .input-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
 
-textarea, select, button {
+textarea, button {
     margin-top: 10px;
     padding: 12px;
-    width: 90%;
-    max-width: 400px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
     box-sizing: border-box;
+    transition: background-color 0.3s ease;
 }
 
 textarea {
     resize: none;
+    width: 80%;
+    margin-right: 10px;
 }
 
 button {
@@ -118,8 +120,7 @@ button {
     font-weight: bold;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
+    width: 100px;
 }
 
 button:hover {
@@ -130,32 +131,36 @@ body.dark-theme button:hover {
     background-color: #004080;
 }
 
-/* Expandable Button */
-.expandable-button {
-    background-color: #007bff;
+/* Language Button */
+.language-button {
+    background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 10px;
-    width: 100%;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 
-.expandable-button:hover {
-    background-color: #0056b3;
+.language-button:hover {
+    background-color: #218838;
 }
 
-body.dark-theme .expandable-button:hover {
-    background-color: #004080;
-}
-
+/* Expandable Language Options */
 .language-options {
     display: none;
     list-style-type: none;
     padding: 0;
     margin: 0;
+    position: absolute;
+    top: 80px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
 }
 
 .language-options li {
@@ -170,7 +175,6 @@ body.dark-theme .expandable-button:hover {
     padding: 10px;
     cursor: pointer;
     text-align: left;
-    font-size: 1rem;
 }
 
 .language-options li button:hover {
@@ -190,9 +194,18 @@ body.dark-theme .language-options li button:hover {
 @media (max-width: 768px) {
     .chat-container {
         width: 90%;
-        max-width: none;
     }
-    .message {
-        max-width: 100%;
+
+    .input-container {
+        flex-direction: column;
+    }
+
+    textarea {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    button {
+        width: 100%;
     }
 }
