@@ -15,7 +15,7 @@ document.getElementById('languageBtn').addEventListener('click', () => {
 
 function selectLanguage(language) {
     selectedLanguage = language;
-    document.getElementById('languageBtn').innerText = `Language: ${language.toUpperCase()}`;
+    document.getElementById('languageBtn').innerText = `Translate to: ${language.toUpperCase()}`;
     document.getElementById('languageOptions').style.display = 'none';
     document.getElementById('sendBtn').disabled = false; // Enable send button after language selection
 }
@@ -40,6 +40,10 @@ async function translateText() {
         console.error("❌ Translation Error:", error);
         appendMessage('Translation failed!', 'bot-message', selectedLanguage.toUpperCase());
     }
+
+    // Reset text field after translation
+    document.getElementById("inputText").value = '';
+    document.getElementById('sendBtn').disabled = true; // Disable send button after translation
 }
 
 function appendMessage(message, className, language) {
