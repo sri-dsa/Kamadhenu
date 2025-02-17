@@ -11,23 +11,25 @@
     <div class="chat-container">
         <div class="chat-header">
             <h2>Bhashini Translator</h2>
-            <button id="themeToggle" onclick="toggleTheme()">💡</button>
+            <button id="themeToggle">💡</button>
         </div>
 
-        <div id="chat" class="chat-box"></div>
+        <div class="chat-box" id="chatBox">
+            <!-- Chat history will go here -->
+        </div>
 
         <div class="input-container">
-            <div class="language-selector">
-                <button id="languageBtn" onclick="toggleLanguageList()">+ Language</button>
-                <div id="language-options" class="language-options">
-                    <button onclick="setLanguage('ta')">Tamil</button>
-                    <button onclick="setLanguage('te')">Telugu</button>
-                    <button onclick="setLanguage('kn')">Kannada</button>
-                    <button onclick="setLanguage('mr')">Marathi</button>
+            <div class="language-selector" id="languageSelector">
+                <button id="languageBtn">Select Language</button>
+                <div class="language-options" id="languageOptions">
+                    <button onclick="selectLanguage('ta')">Tamil</button>
+                    <button onclick="selectLanguage('te')">Telugu</button>
+                    <button onclick="selectLanguage('kn')">Kannada</button>
+                    <button onclick="selectLanguage('mr')">Marathi</button>
                 </div>
             </div>
             <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
-            <button id="sendBtn" onclick="sendMessage()">Send</button>
+            <button id="sendBtn" onclick="translateText()" disabled>Send</button>
         </div>
     </div>
 </body>
