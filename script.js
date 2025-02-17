@@ -1,72 +1,63 @@
-const BHASHINI_HOST = "https://dhruva.bhashini.gov.in";
-const TRANSLATION_ENDPOINT = "/services/inference/pipeline";
-const INFERENCE_API_KEY = "N8BGXbq4tN3fYZ_57i_XjQbaAut871LQJ4s6hIF1ucupt-yxZp93YiOP8kiImG4V";
-const UDYAT_KEY = "28b7ab1439-48e9-43b7-89b4-03793fc945c5";
+const BHASHINI_API = "https://dhruva-api.bhashini.gov.in/services/inference/web-pipeline";
+const INFERENCE_API_KEY = "7tT86lGiAXxwRvTjvpYjBrtcejxHinFa-6Jb_yQwaJMz1P3NNcYZvQPOXpmPJVEx";
+const UDYAT_KEY = "53150dbcde-5d68-4505-a1e5-5299242d6847";
 
-// Function to toggle between light and dark themes
+let selectedLanguageCode = "";
+let selectedLanguageName = "";
+
+// Toggle Theme
 function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.classList.contains('dark-theme');
-    
-    if (currentTheme) {
-        body.classList.remove('dark-theme');
-        document.getElementById('theme-toggle').textContent = '💡';
-    } else {
-        body.classList.add('dark-theme');
-        document.getElementById('theme-toggle').textContent = '🌙';
-    }
+    document.body.classList.toggle('dark-theme');
+    document.getElementById('theme-toggle').textContent = 
+        document.body.classList.contains('dark-theme') ? '🌙' : '💡';
 }
 
-// Toggle language options visibility
+// Toggle Language Options
 function toggleLanguageOptions() {
-    const languageOptions = document.getElementById('language-options');
-    const isVisible = languageOptions.style.display === 'block';
-    languageOptions.style.display = isVisible ? 'none' : 'block';
+    const menu = document.getElementById('language-options');
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
 
-// Set the selected language
-function setLanguage(languageCode) {
+// Set Selected Language
+function setLanguage(code, name) {
+    selectedLanguageCode = code;
+    selectedLanguageName = name;
+
     document.getElementById('language-options').style.display = 'none';
-    document.getElementById('selectedLanguage').innerText = languageCode;
+    document.getElementById('inputText').placeholder = `Translate to ${selectedLanguageName}...`;
+    document.getElementById('sendButton').disabled = false;
+    document.getElementById('inputText').disabled = false;
 }
 
-// Function to send message and get translation
+// Send Message to Bhashini API
 async function sendMessage() {
     const inputText = document.getElementById('inputText').value.trim();
-    const targetLanguage = document.getElementById('selectedLanguage')?.innerText || 'ta'; // Default language is Tamil
-
+    
     if (!inputText) {
-        alert("Please enter text to translate!");
+        alert(`Translate to ${selectedLanguageName}: Please enter text to translate!`);
         return;
     }
 
-    // Add user message to chat box
-    const userMessage = document.createElement("div");
-    userMessage.classList.add("message", "user-message");
-    userMessage.innerText = inputText;
-    document.getElementById("chat").appendChild(userMessage);
-
-    // Clear the input field
+    // Display user message
+    const chatBox = document.getElementById("chat");
+    const userMessage = `<div class="message user-message">${inputText}</div>`;
+    chatBox.innerHTML += userMessage;
     document.getElementById("inputText").value = "";
 
-    // Scroll to the bottom of the chat box
-    const chatBox = document.getElementById("chat");
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // Call translation API
+    // Translation API Payload
     const payload = {
         input: [{ source: inputText }],
         config: {
             serviceId: "ai4bharat/indictrans-v2",
             language: {
-                sourceLanguage: "hi", // Assuming Hindi as the source language
-                targetLanguage: targetLanguage
+                sourceLanguage: "en",
+                targetLanguage: selectedLanguageCode
             }
         }
     };
 
     try {
-        const response = await fetch(BHASHINI_HOST + TRANSLATION_ENDPOINT, {
+        const response = await fetch(BHASHINI_API, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -79,18 +70,15 @@ async function sendMessage() {
         const data = await response.json();
 
         if (data.output) {
-            const botMessage = document.createElement("div");
-            botMessage.classList.add("message", "bot-message");
-            botMessage.innerText = data.output[0].target;
-            chatBox.appendChild(botMessage);
+            const botMessage = `<div class="message bot-message">${data.output[0].target}</div>`;
+            chatBox.innerHTML += botMessage;
         } else {
-            alert("Error: Unexpected API Response!");
+            alert(`Translate to ${selectedLanguageName}: Translation failed.`);
         }
 
-        // Scroll to the bottom of the chat box
         chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
-        console.error("🔴 Error:", error);
-        alert("Error communicating with the translation service.");
+        console.error("Error:", error);
+        alert(`Translate to ${selectedLanguageName}: Error contacting translation service.`);
     }
 }
