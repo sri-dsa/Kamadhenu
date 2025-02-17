@@ -3,32 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhashini Translator Chatbot</title>
-    <script defer src="script.js"></script>
+    <title>Multilingual Chatbot</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="theme-toggle-container">
-        <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">💡</button>
-    </div>
-
+    <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
     <div class="chat-container">
-        <div id="chat" class="chat-box"></div>
-        
+        <div class="chat-box" id="chatBox"></div>
         <div class="input-container">
-            <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
-            
-            <button id="language-button" class="language-button" onclick="toggleLanguageOptions()">Select Language</button>
-            <button onclick="sendMessage()">भेजें/Send</button>
+            <button id="language-btn" onclick="toggleLanguageDropdown()">Select Language</button>
+            <div id="language-dropdown" class="dropdown hidden">
+                <button onclick="selectLanguage('Hindi')">Hindi</button>
+                <button onclick="selectLanguage('Spanish')">Spanish</button>
+                <button onclick="selectLanguage('French')">French</button>
+            </div>
+            <input type="text" id="userInput" placeholder="Type a message..." oninput="checkInput()">
+            <button id="send-btn" onclick="sendMessage()" disabled>भेजें/Send</button>
         </div>
-
-        <!-- Language Selection Menu -->
-        <ul id="language-options" class="language-options">
-            <li><button onclick="setLanguage('ta', 'Tamil')">Tamil</button></li>
-            <li><button onclick="setLanguage('te', 'Telugu')">Telugu</button></li>
-            <li><button onclick="setLanguage('kn', 'Kannada')">Kannada</button></li>
-            <li><button onclick="setLanguage('mr', 'Marathi')">Marathi</button></li>
-        </ul>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
+
+
