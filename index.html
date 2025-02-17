@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhashini Translator</title>
+    <script defer src="script.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        textarea, select, button { margin: 10px; padding: 10px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h2>Bhashini Translator</h2>
+    
+    <label for="inputText">Enter Text:</label><br>
+    <textarea id="inputText" rows="3" placeholder="Type here..."></textarea><br>
 
+    <label for="targetLanguage">Select Target Language:</label><br>
+    <select id="targetLanguage">
+        <option value="ta">Tamil</option>
+        <option value="te">Telugu</option>
+        <option value="kn">Kannada</option>
+        <option value="mr">Marathi</option>
+    </select><br>
+
+    <button onclick="translateText()">Translate</button>
+
+    <h3>Translated Text:</h3>
+    <p id="translatedText">-</p>
+</body>
+</html>
