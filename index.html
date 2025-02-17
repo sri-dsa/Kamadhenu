@@ -15,21 +15,21 @@
     <div class="chat-container">
         <div id="chat" class="chat-box"></div>
         
-        <!-- Language Selection with Expandable Button -->
-        <div class="language-select-container">
-            <button class="expandable-button" onclick="toggleLanguageOptions()">Select Language</button>
-            <ul id="language-options" class="language-options">
-                <li><button onclick="setLanguage('ta')">Tamil</button></li>
-                <li><button onclick="setLanguage('te')">Telugu</button></li>
-                <li><button onclick="setLanguage('kn')">Kannada</button></li>
-                <li><button onclick="setLanguage('mr')">Marathi</button></li>
-            </ul>
-        </div>
-
         <div class="input-container">
             <textarea id="inputText" rows="3" placeholder="Type here..."></textarea>
+            
+            <!-- Language Button next to Send button -->
+            <button class="language-button" onclick="toggleLanguageOptions()">🌐</button>
             <button onclick="sendMessage()">Send</button>
         </div>
+
+        <!-- Language Selection Menu -->
+        <ul id="language-options" class="language-options">
+            <li><button onclick="setLanguage('ta')">Tamil</button></li>
+            <li><button onclick="setLanguage('te')">Telugu</button></li>
+            <li><button onclick="setLanguage('kn')">Kannada</button></li>
+            <li><button onclick="setLanguage('mr')">Marathi</button></li>
+        </ul>
     </div>
 </body>
 </html>
