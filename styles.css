@@ -1,148 +1,99 @@
-/* General Styles */
+/* General body styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100vh;
-    background-color: #222;
-    color: white;
-    transition: background 0.3s;
+    flex-direction: column;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+/* Dark theme */
+body.dark-theme {
+    background-color: #222;
+    color: #fff;
+}
+
+/* Theme toggle button */
+.theme-toggle-button {
+    background-color: yellow; /* Customizable */
+    border: none;
+    font-size: 1.5rem;
     cursor: pointer;
-    font-size: 24px;
-    background: yellow;
-    padding: 8px;
-    border-radius: 50%;
 }
 
 /* Chatbox */
 .chat-container {
     width: 90%;
-    max-width: 500px;
-    background: #333;
+    max-width: 600px;
+    background-color: #fff;
     border-radius: 10px;
-    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    height: 90vh;
 }
 
+/* Dark theme chatbox */
+body.dark-theme .chat-container {
+    background-color: #444;
+}
+
+/* Chat messages */
 .chat-box {
-    height: 400px;
     overflow-y: auto;
+    flex-grow: 1;
     padding: 10px;
+    max-height: 400px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.user-message {
-    background: blue;
-    color: white;
-    align-self: flex-end;
+/* User and bot messages */
+.message {
     padding: 10px;
-    border-radius: 10px;
-    max-width: 70%;
+    border-radius: 5px;
+    max-width: 80%;
+}
+
+.user-message {
+    background-color: #007bff;
+    align-self: flex-end; /* Right-aligned */
 }
 
 .bot-message {
-    background: green;
+    background-color: #28a745;
     color: white;
-    align-self: flex-start;
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 70%;
+    align-self: flex-start; /* Left-aligned */
 }
 
-/* Input Section */
+.error-message {
+    background-color: red;
+}
+
+/* Input section */
 .input-container {
     display: flex;
-    padding: 10px;
-    background: #444;
     align-items: center;
 }
 
-input {
-    flex: 1;
-    padding: 10px;
-    border: none;
+textarea, button {
+    padding: 12px;
+    font-size: 1rem;
     border-radius: 5px;
 }
 
-button {
-    margin-left: 5px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* Language Button */
-#language-btn {
-    background: red;
+.language-button {
+    background-color: #ff0000; /* #28a745 */
     color: white;
+    font-size: 1rem;
 }
 
-/* Dropdown */
-.dropdown {
-    position: absolute;
-    background: white;
-    color: black;
-    display: none;
-    border-radius: 5px;
-    animation: fadeIn 0.3s;
-}
-
-.dropdown button {
-    width: 100%;
-    padding: 8px;
-    border: none;
-    background: white;
-    cursor: pointer;
-}
-
-.dropdown button:hover {
-    background: #ddd;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Dark Theme */
-.dark-theme {
-    background: black;
-}
-
-.dark-theme .chat-container {
-    background: #111;
-}
-
-.dark-theme .user-message {
-    background: blue;
-}
-
-.dark-theme .bot-message {
-    background: green;
-}
-
-.dark-theme #language-btn {
-    background: red;
-}
-
-.dark-theme button {
-    background: #555;
-    color: white;
-}
-
-.dark-theme input {
-    background: #666;
-    color: white;
+.language-button:hover {
+    background-color: #218838;
 }
