@@ -129,6 +129,32 @@ body.dark-theme button:hover {
     background-color: #004080;
 }
 
+/* Expandable Button */
+.expandable-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.expandable-button:hover {
+    background-color: #0056b3;
+}
+
+body.dark-theme .expandable-button:hover {
+    background-color: #004080;
+}
+
+.language-options {
+    display: none;
+    margin-top: 10px;
+}
+
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
     .chat-container {
