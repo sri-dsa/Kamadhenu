@@ -1,47 +1,60 @@
-/* General Styling */
+/* General body styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
-    background-color: #f4f4f9;
-    transition: background 0.3s;
+    height: 100vh;
+    flex-direction: column;
 }
 
-/* Dark Theme */
+/* Dark theme */
 body.dark-theme {
     background-color: #222;
-    color: white;
+    color: #fff;
+}
+
+/* Theme toggle button */
+.theme-toggle-button {
+    background-color: yellow; /* Customizable */
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 /* Chatbox */
 .chat-container {
-    width: 100%;
+    width: 90%;
     max-width: 600px;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    background: white;
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    height: 90vh;
 }
 
+/* Dark theme chatbox */
 body.dark-theme .chat-container {
-    background: #444;
+    background-color: #444;
 }
 
-/* Chat Messages */
+/* Chat messages */
 .chat-box {
-    flex-grow: 1;
     overflow-y: auto;
+    flex-grow: 1;
     padding: 10px;
+    max-height: 400px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
+/* User and bot messages */
 .message {
     padding: 10px;
     border-radius: 5px;
@@ -49,61 +62,38 @@ body.dark-theme .chat-container {
 }
 
 .user-message {
-    background: #d1e7fd;
-    align-self: flex-start;
+    background-color: #e9ecef;
+    align-self: flex-end; /* Right-aligned */
 }
 
 .bot-message {
-    background: #007bff;
+    background-color: #007bff;
     color: white;
-    align-self: flex-end;
+    align-self: flex-start; /* Left-aligned */
 }
 
-/* Input Container */
+.error-message {
+    background-color: red;
+}
+
+/* Input section */
 .input-container {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
-textarea {
-    width: 100%;
-    height: 50px;
-    padding: 8px;
+textarea, button {
+    padding: 12px;
+    font-size: 1rem;
     border-radius: 5px;
-}
-
-/* Buttons */
-button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 .language-button {
-    background: #28a745;
+    background-color: #28a745;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Language Selection */
-.language-options {
-    display: none;
-    position: absolute;
-    list-style: none;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.language-options button {
-    width: 100%;
-    text-align: left;
+.language-button:hover {
+    background-color: #218838;
 }
