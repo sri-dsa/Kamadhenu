@@ -1,56 +1,96 @@
-let selectedLanguage = null;
+const BHASHINI_HOST = "https://dhruva.bhashini.gov.in";
+const TRANSLATION_ENDPOINT = "/services/inference/pipeline";
+const INFERENCE_API_KEY = "N8BGXbq4tN3fYZ_57i_XjQbaAut871LQJ4s6hIF1ucupt-yxZp93YiOP8kiImG4V";
+const UDYAT_KEY = "28b7ab1439-48e9-43b7-89b4-03793fc945c5";
 
-// Theme toggle function
-document.getElementById('themeToggle').addEventListener('click', () => {
+// Function to toggle between light and dark themes
+function toggleTheme() {
     const body = document.body;
-    body.classList.toggle('light');
-    body.classList.toggle('dark');
-});
-
-// Language selection toggle
-document.getElementById('languageBtn').addEventListener('click', () => {
-    const options = document.getElementById('languageOptions');
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-});
-
-function selectLanguage(language) {
-    selectedLanguage = language;
-    document.getElementById('languageBtn').innerText = `Translate to: ${language.toUpperCase()}`;
-    document.getElementById('languageOptions').style.display = 'none';
-    document.getElementById('sendBtn').disabled = false; // Enable send button after language selection
+    const currentTheme = body.classList.contains('dark-theme');
+    
+    if (currentTheme) {
+        body.classList.remove('dark-theme');
+        document.getElementById('theme-toggle').textContent = '💡';
+    } else {
+        body.classList.add('dark-theme');
+        document.getElementById('theme-toggle').textContent = '🌙';
+    }
 }
 
-async function translateText() {
-    const inputText = document.getElementById("inputText").value.trim();
-    
-    if (!inputText || !selectedLanguage) {
-        alert("Please enter text and select a language!");
+// Toggle language options visibility
+function toggleLanguageOptions() {
+    const languageOptions = document.getElementById('language-options');
+    const isVisible = languageOptions.style.display === 'block';
+    languageOptions.style.display = isVisible ? 'none' : 'block';
+}
+
+// Set the selected language
+function setLanguage(languageCode) {
+    document.getElementById('language-options').style.display = 'none';
+    document.getElementById('selectedLanguage').innerText = languageCode;
+}
+
+// Function to send message and get translation
+async function sendMessage() {
+    const inputText = document.getElementById('inputText').value.trim();
+    const targetLanguage = document.getElementById('selectedLanguage')?.innerText || 'ta'; // Default language is Tamil
+
+    if (!inputText) {
+        alert("Please enter text to translate!");
         return;
     }
 
-    // Display user's message in chat
-    appendMessage(inputText, 'user-message', 'Hindi');
+    // Add user message to chat box
+    const userMessage = document.createElement("div");
+    userMessage.classList.add("message", "user-message");
+    userMessage.innerText = inputText;
+    document.getElementById("chat").appendChild(userMessage);
 
-    // Translate the text (mockup error message for now)
+    // Clear the input field
+    document.getElementById("inputText").value = "";
+
+    // Scroll to the bottom of the chat box
+    const chatBox = document.getElementById("chat");
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Call translation API
+    const payload = {
+        input: [{ source: inputText }],
+        config: {
+            serviceId: "ai4bharat/indictrans-v2",
+            language: {
+                sourceLanguage: "hi", // Assuming Hindi as the source language
+                targetLanguage: targetLanguage
+            }
+        }
+    };
+
     try {
-        // This part simulates API error handling for now.
-        const errorMessage = `Error: Could not translate to ${selectedLanguage.toUpperCase()}.`; 
-        appendMessage(errorMessage, 'bot-message', selectedLanguage.toUpperCase());
+        const response = await fetch(BHASHINI_HOST + TRANSLATION_ENDPOINT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${INFERENCE_API_KEY}`,
+                "udyat-api-key": UDYAT_KEY
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.output) {
+            const botMessage = document.createElement("div");
+            botMessage.classList.add("message", "bot-message");
+            botMessage.innerText = data.output[0].target;
+            chatBox.appendChild(botMessage);
+        } else {
+            alert("Error: Unexpected API Response!");
+        }
+
+        // Scroll to the bottom of the chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
-        console.error("❌ Translation Error:", error);
-        appendMessage('Translation failed!', 'bot-message', selectedLanguage.toUpperCase());
+        console.error("🔴 Error:", error);
+        alert("Error communicating with the translation service.");
     }
-
-    // Reset text field after translation
-    document.getElementById("inputText").value = '';
-    document.getElementById('sendBtn').disabled = true; // Disable send button after translation
-}
-
-function appendMessage(message, className, language) {
-    const chatBox = document.getElementById('chatBox');
-    const messageElement = document.createElement('div');
-    messageElement.className = `message ${className}`;
-    messageElement.innerHTML = `<strong>${language}:</strong> ${message}`;
-    chatBox.appendChild(messageElement);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
 }
