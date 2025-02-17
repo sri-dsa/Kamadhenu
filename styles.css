@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
     background-color: #121212;
     color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark {
@@ -22,7 +23,6 @@ body {
     color: black;
 }
 
-/* Chat container */
 .chat-container {
     width: 100%;
     max-width: 600px;
@@ -35,7 +35,6 @@ body {
     position: relative;
 }
 
-/* Header */
 .chat-header {
     display: flex;
     justify-content: space-between;
@@ -49,11 +48,11 @@ body {
     cursor: pointer;
 }
 
-/* Chat box */
+/* Chat Box */
 .chat-box {
     margin-top: 20px;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -89,6 +88,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    position: relative;
 }
 
 #languageBtn {
@@ -97,7 +97,7 @@ body {
     border: 1px solid #666;
     padding: 8px;
     cursor: pointer;
-    position: relative;
+    width: 100%;
 }
 
 .language-options {
@@ -108,7 +108,7 @@ body {
     margin-top: 10px;
     border-radius: 5px;
     z-index: 100;
-    width: 200px;
+    width: 100%;
 }
 
 .language-options button {
@@ -143,6 +143,11 @@ button {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
+}
+
+button:disabled {
+    background-color: #888;
 }
 
 button:hover {
