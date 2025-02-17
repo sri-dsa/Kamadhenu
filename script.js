@@ -1,11 +1,24 @@
 const BHASHINI_HOST = "https://dhruva.bhashini.gov.in";
 const TRANSLATION_ENDPOINT = "/services/inference/pipeline";
-
-// API Keys (⚠️ Keep these secure in production)
 const INFERENCE_API_KEY = "N8BGXbq4tN3fYZ_57i_XjQbaAut871LQJ4s6hIF1ucupt-yxZp93YiOP8kiImG4V";
 const UDYAT_KEY = "28b7ab1439-48e9-43b7-89b4-03793fc945c5";
 
-async function translateText() {
+// Function to toggle between light and dark themes
+function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.classList.contains('dark-theme');
+    
+    if (currentTheme) {
+        body.classList.remove('dark-theme');
+        document.getElementById('theme-toggle').textContent = '💡';
+    } else {
+        body.classList.add('dark-theme');
+        document.getElementById('theme-toggle').textContent = '🌙';
+    }
+}
+
+// Function to send message and get response
+async function sendMessage() {
     const inputText = document.getElementById("inputText").value.trim();
     const targetLanguage = document.getElementById("targetLanguage").value;
 
@@ -14,12 +27,23 @@ async function translateText() {
         return;
     }
 
+    const chatBox = document.getElementById("chat");
+    
+    // Add user's message to chat box
+    const userMessage = document.createElement("div");
+    userMessage.classList.add("message", "user-message");
+    userMessage.innerText = inputText;
+    chatBox.appendChild(userMessage);
+
+    // Scroll to the bottom of the chat box
+    chatBox.scrollTop = chatBox.scrollHeight;
+
     const payload = {
         input: [{ source: inputText }],
         config: {
             serviceId: "ai4bharat/indictrans-v2",
             language: {
-                sourceLanguage: "hi",  // Hindi as input language
+                sourceLanguage: "hi",
                 targetLanguage: targetLanguage
             }
         }
@@ -39,13 +63,30 @@ async function translateText() {
         const data = await response.json();
         console.log("🔍 API Response:", data);
 
+        const botMessage = document.createElement("div");
+        botMessage.classList.add("message", "bot-message");
+        
         if (data.output) {
-            document.getElementById("translatedText").innerText = data.output[0].target;
+            botMessage.innerText = data.output[0].target;
         } else {
-            document.getElementById("translatedText").innerText = "Error: Unexpected API Response!";
+            botMessage.innerText = "Error: Unexpected API Response!";
         }
+
+        // Add bot's response to chat box
+        chatBox.appendChild(botMessage);
+
+        // Scroll to the bottom of the chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
+
     } catch (error) {
         console.error("❌ Translation Error:", error);
-        document.getElementById("translatedText").innerText = "Translation failed!";
+        const botErrorMessage = document.createElement("div");
+        botErrorMessage.classList.add("message", "bot-message");
+        botErrorMessage.innerText = "Translation failed!";
+        chatBox.appendChild(botErrorMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
+
+    // Clear input field
+    document.getElementById("inputText").value = '';
 }
