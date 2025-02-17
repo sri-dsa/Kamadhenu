@@ -24,6 +24,12 @@ function toggleLanguageOptions() {
     languageOptions.style.display = isVisible ? 'none' : 'block';
 }
 
+// Set selected language and close the language options
+function setLanguage(language) {
+    document.getElementById("targetLanguage").value = language;
+    toggleLanguageOptions(); // Hide the options after selection
+}
+
 // Function to send message and get response
 async function sendMessage() {
     const inputText = document.getElementById("inputText").value.trim();
@@ -68,19 +74,16 @@ async function sendMessage() {
         });
 
         const data = await response.json();
-        console.log("🔍 API Response:", data);
-
-        const botMessage = document.createElement("div");
-        botMessage.classList.add("message", "bot-message");
         
         if (data.output) {
+            // Add bot's response to chat box
+            const botMessage = document.createElement("div");
+            botMessage.classList.add("message", "bot-message");
             botMessage.innerText = data.output[0].target;
+            chatBox.appendChild(botMessage);
         } else {
-            botMessage.innerText = "Error: Unexpected API Response!";
+            alert("Error: Unexpected API Response!");
         }
-
-        // Add bot's response to chat box
-        chatBox.appendChild(botMessage);
 
         // Scroll to the bottom of the chat box
         chatBox.scrollTop = chatBox.scrollHeight;
