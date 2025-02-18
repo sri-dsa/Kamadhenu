@@ -26,6 +26,7 @@ body.light-theme {
     padding: 10px;
     max-height: 80vh;
     overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 .message {
@@ -103,6 +104,7 @@ body.light-theme {
     cursor: pointer;
     font-size: 16px;
     text-align: center;
+    position: relative;
 }
 
 #language-options {
@@ -127,9 +129,45 @@ body.light-theme {
     background-color: #f1f1f1;
 }
 
+/* Language Toggle Behavior */
+#language-options {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#language-options.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Focus Effects */
 #inputText:focus {
     outline: none;
     border: 2px solid #007bff;
+}
+
+/* Smooth Dropdown Animations */
+#language-options {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#language-options.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Button Customizations */
+#sendButton {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+#inputText {
+    font-size: 14px;
+    padding: 8px;
 }
 
 /* Responsive Design */
@@ -157,7 +195,19 @@ body.light-theme {
     }
 }
 
-/* Smooth Dropdown Animations */
+/* Language and Input Area */
+#inputText {
+    width: calc(100% - 20px);
+    margin-top: 20px;
+}
+
+/* Chat History Formatting */
+.message-label {
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Smooth Animations for Language Toggle */
 #language-options {
     display: none;
     opacity: 0;
@@ -167,4 +217,16 @@ body.light-theme {
 #language-options.show {
     display: block;
     opacity: 1;
+}
+
+/* Additional Styling for Buttons */
+#sendButton {
+    font-size: 16px;
+    padding: 12px 20px;
+}
+
+/* Themed Button */
+#theme-toggle {
+    font-size: 20px;
+    padding: 10px;
 }
