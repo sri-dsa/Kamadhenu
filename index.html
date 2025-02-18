@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Theme Toggle Button (Left-aligned) -->
     <div class="theme-toggle-container">
         <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">💡</button>
     </div>
@@ -15,26 +16,34 @@
     <div class="chat-container">
         <div id="chat" class="chat-box"></div>
 
+        <!-- Input Section -->
         <div class="input-container">
             <textarea id="inputText" rows="3" placeholder="Type here..." disabled></textarea>
 
-            <!-- Language selection button -->
-            <button class="language-button" onclick="toggleLanguageOptions()">📎</button>
+            <!-- Language Selection Button -->
+            <button id="language-button" class="language-button" onclick="toggleLanguageOptions()">Select Language</button>
 
-            <!-- Send button (Initially Disabled) -->
-            <button id="sendButton" onclick="sendMessage()" disabled>भेजें</button>
+            <!-- Send Button (Initially Disabled) -->
+            <button id="sendButton" onclick="sendMessage()" disabled>भेजें/Send</button>
         </div>
 
-        <!-- Language Selection Menu -->
+        <!-- Language Selection Menu (Initially Hidden) -->
         <ul id="language-options" class="language-options">
             <li><button onclick="setLanguage('ta', 'Tamil')">Tamil</button></li>
             <li><button onclick="setLanguage('te', 'Telugu')">Telugu</button></li>
             <li><button onclick="setLanguage('ur', 'Urdu')">Urdu</button></li>
-            <li><button onclick="setLanguage('hi', 'Hindi')">Hindi</button></li>
-            <li><button onclick="setLanguage('bn', 'Bengali')">Bengali</button></li>
+            <li><button onclick="setLanguage('sd', 'Sindhi')">Sindhi</button></li>
+            <li><button onclick="setLanguage('sa', 'Sanskrit')">Sanskrit</button></li>
             <li><button onclick="setLanguage('pa', 'Punjabi')">Punjabi</button></li>
+            <li><button onclick="setLanguage('or', 'Odia')">Odia</button></li>
+            <li><button onclick="setLanguage('ne', 'Nepali')">Nepali</button></li>
+            <li><button onclick="setLanguage('mr', 'Marathi')">Marathi</button></li>
             <li><button onclick="setLanguage('ml', 'Malayalam')">Malayalam</button></li>
             <li><button onclick="setLanguage('kn', 'Kannada')">Kannada</button></li>
+            <li><button onclick="setLanguage('hi', 'Hindi')">Hindi</button></li>
+            <li><button onclick="setLanguage('gu', 'Gujarati')">Gujarati</button></li>
+            <li><button onclick="setLanguage('bn', 'Bengali')">Bengali</button></li>
+            <li><button onclick="setLanguage('as', 'Assamese')">Assamese</button></li>
         </ul>
     </div>
 </body>
