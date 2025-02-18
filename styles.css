@@ -158,9 +158,9 @@ body.light-theme .chat-container {
     position: relative;
 }
 
-/* Language options (Appears within input box region) */
+/* Language options (Initially Hidden) */
 .language-options {
-    display: none;
+    display: none; /* Hide by default */
     position: absolute;
     width: 100%;
     background: white;
@@ -169,14 +169,14 @@ body.light-theme .chat-container {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease-in-out;
-    display: flex;
     flex-wrap: wrap;  /* Makes it responsive in rows */
     gap: 5px;
     justify-content: center;
 }
 
-/* Smooth animation when opening */
+/* Show language options when active */
 .language-options.show {
+    display: flex; /* Only shown when 'show' class is added */
     opacity: 1;
     transform: translateY(10px);
 }
