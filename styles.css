@@ -102,6 +102,7 @@ body.dark-theme .chat-container {
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    display: none;  /* Initially hidden */
 }
 
 /* Language button */
@@ -138,11 +139,12 @@ body.dark-theme .chat-container {
     border-radius: 5px;
     position: absolute;
     width: 80%;  /* Adjust width to match the button width */
-    top: 0; /* Make sure it aligns above the input box */
+    top: 0; /* Position above the input box */
     z-index: 10;
-    display: none; /* Hidden initially, will be displayed when button is clicked */
+    display: none; /* Initially hidden */
 }
 
+/* Show the language options when active */
 .language-options.show {
     display: block;
     opacity: 1;
