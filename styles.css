@@ -17,32 +17,42 @@ body.light-theme {
     color: #000;
 }
 
-/* Theme toggle (right-aligned) */
+/* ========== THEME TOGGLE BUTTON ========== */
 .theme-toggle-container {
     width: 100%;
     text-align: right;
     padding: 10px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .theme-toggle-button {
     background-color: yellow;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Increased size */
     cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 50px;
     transition: transform 0.3s ease-in-out;
 }
 
-/* Dark theme toggle icon */
-body.dark-theme .theme-toggle-button {
+/* Light and Dark theme icons */
+body.dark-theme .theme-toggle-button::before {
     content: "☁️"; /* Cloud icon */
 }
 
-/* Light theme toggle icon */
-body.light-theme .theme-toggle-button {
+body.light-theme .theme-toggle-button::before {
     content: "💡"; /* Shining bulb */
 }
 
-/* Chatbox container */
+/* Mobile: Center the theme toggle */
+@media screen and (max-width: 768px) {
+    .theme-toggle-container {
+        justify-content: center;
+    }
+}
+
+/* ========== CHATBOX CONTAINER ========== */
 .chat-container {
     width: 90%;
     max-width: 1200px;
@@ -88,8 +98,8 @@ body.light-theme .chat-container {
     border-radius: 12px;
 }
 
-/* Bot message (Left aligned, Green) */
-.bot-message {
+/* Bot message (Left aligned, Green, including error messages) */
+.bot-message, .error-message {
     background-color: #28a745;
     color: white;
     align-self: flex-start;
@@ -97,16 +107,26 @@ body.light-theme .chat-container {
     border-radius: 12px;
 }
 
-/* Error message */
-.error-message {
-    background-color: red;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
+/* ========== MESSAGE LABELS (WhatsApp-style) ========== */
+.message-label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 3px;
 }
 
-/* Input container */
+/* User text label */
+.user-label {
+    text-align: right;
+    color: lightgray;
+}
+
+/* Bot text label */
+.bot-label {
+    text-align: left;
+    color: lightgray;
+}
+
+/* ========== INPUT FIELD & LANGUAGE SELECTION ========== */
 .input-container {
     display: flex;
     flex-direction: column;
@@ -115,7 +135,7 @@ body.light-theme .chat-container {
     position: relative; /* Ensure dropdown positions correctly */
 }
 
-/* Hidden input text (appears after language selection) */
+/* Hidden input text (Appears after language selection) */
 #inputText {
     width: 100%;
     padding: 10px;
@@ -125,7 +145,7 @@ body.light-theme .chat-container {
     display: none; /* Initially hidden */
 }
 
-/* Language button (Expandable like WhatsApp's attachment icon) */
+/* ========== LANGUAGE BUTTON (EXPANDABLE LIKE WHATSAPP) ========== */
 .language-button {
     width: 80%;
     padding: 10px;
@@ -138,32 +158,32 @@ body.light-theme .chat-container {
     position: relative;
 }
 
-/* Language dropdown (Hidden initially) */
+/* Language options (Appears within input box region) */
 .language-options {
     display: none;
     position: absolute;
-    top: -120px; /* Positioned above the input box */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
+    width: 100%;
     background: white;
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;  /* Makes it responsive in rows */
+    gap: 5px;
+    justify-content: center;
 }
 
 /* Smooth animation when opening */
 .language-options.show {
-    display: block;
     opacity: 1;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateY(10px);
 }
 
 /* Language button inside the dropdown */
 .language-options button {
-    width: 100%;
+    flex: 1 1 30%; /* Adjusts dynamically for responsiveness */
     padding: 10px;
     background: none;
     border: none;
@@ -173,13 +193,14 @@ body.light-theme .chat-container {
     background-color: #f4f4f9;
     border-radius: 5px;
     transition: background-color 0.3s;
+    text-align: center;
 }
 
 .language-options button:hover {
     background-color: #ddd;
 }
 
-/* Send button */
+/* ========== SEND BUTTON ========== */
 #sendButton {
     width: 80%;
     padding: 10px;
@@ -198,26 +219,7 @@ body.light-theme .chat-container {
     cursor: not-allowed;
 }
 
-/* Message labels (Above texts) */
-.message-label {
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-bottom: 3px;
-}
-
-/* User text label */
-.user-label {
-    text-align: right;
-    color: lightgray;
-}
-
-/* Bot text label */
-.bot-label {
-    text-align: left;
-    color: lightgray;
-}
-
-/* Responsive design for mobile */
+/* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
     .language-button, #sendButton {
         width: 100%;
@@ -225,7 +227,6 @@ body.light-theme .chat-container {
 
     .language-options {
         width: 100%;
-        top: 10px;
     }
 }
 
