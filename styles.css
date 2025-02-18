@@ -1,7 +1,7 @@
 /* General styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #222;  /* Dark theme by default */
     color: #fff;
     margin: 0;
     display: flex;
@@ -11,42 +11,38 @@ body {
     flex-direction: column;
 }
 
-/* Dark theme */
+/* Dark theme (already set as default) */
 body.dark-theme {
     background-color: #222;
     color: #fff;
 }
 
-/* Theme toggle (right-aligned) */
+/* Theme toggle (left in laptop and centered in mobile) */
 .theme-toggle-container {
     width: 100%;
-    text-align: right;
+    text-align: left; /* Adjust for laptop */
     padding: 10px;
 }
 
 .theme-toggle-button {
     background-color: yellow;
     border: none;
-    font-size: 1.5rem;
+    font-size: 2rem;  /* Increased size */
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
 /* Chatbox */
 .chat-container {
     width: 90%;
-    max-width: 600px;
-    background-color: #fff;
+    max-width: 800px;  /* Increased width for laptop view */
+    background-color: #444;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    margin: 50px auto;
+    margin: 20px auto;
     height: 90vh;
-}
-
-/* Dark theme chatbox */
-body.dark-theme .chat-container {
-    background-color: #444;
 }
 
 /* Chat messages */
@@ -60,42 +56,70 @@ body.dark-theme .chat-container {
     gap: 10px;
 }
 
-/* User and bot messages */
-.message {
-    padding: 10px;
-    border-radius: 5px;
-    max-width: 80%;
-}
-
-.user-message {
-    background-color: #007bff;
-    align-self: flex-end;
-}
-
-.bot-message {
-    background-color: #28a745;
-    color: white;
-    align-self: flex-start;
-}
-
-.error-message {
-    background-color: #28a745;
-}
-
-/* Input section */
+/* Input section adjustments */
 .input-container {
     display: flex;
     align-items: center;
+    width: 100%;  /* Full width */
+    justify-content: space-between;  /* Align buttons horizontally */
+}
+
+/* Input text box */
+textarea#inputText {
+    width: 70%;  /* Increased width */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    resize: none;
+}
+
+/* Language button & Send button (same size) */
+.language-button, #sendButton {
+    width: 15%;  /* Equal width for both */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
 /* Language button */
 .language-button {
     background-color: red;
     color: white;
-    font-size: 1rem;
 }
 
-/* Hide language menu initially */
+/* Send button */
+#sendButton {
+    background-color: green;
+    color: white;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .theme-toggle-container {
+        text-align: center; /* Center the toggle on mobile */
+    }
+
+    .input-container {
+        flex-direction: column;  /* Stack buttons on mobile */
+        align-items: center;
+    }
+
+    textarea#inputText {
+        width: 90%;  /* Increase text box size */
+        margin-bottom: 10px;
+    }
+
+    .language-button, #sendButton {
+        width: 90%;  /* Make buttons full width on mobile */
+        margin-bottom: 10px;
+    }
+
+    .chat-container {
+        max-width: 100%;
+    }
+}
+
+/* Language options styling */
 .language-options {
     display: none;
     position: absolute;
@@ -103,11 +127,46 @@ body.dark-theme .chat-container {
     list-style: none;
     padding: 0;
     border-radius: 5px;
+    width: 200px;  /* Fix the width of the dropdown */
 }
 
 .language-options button {
     border: none;
     background: none;
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
+    width: 100%;
+}
+
+/* Chat input aesthetics */
+input[type="text"], textarea#inputText {
+    background: #333;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.1rem;
+}
+
+textarea#inputText:focus {
+    border-color: #28a745;  /* Green focus */
+}
+
+/* Input box styling */
+.input-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Send button (disabled state) */
+#sendButton:disabled {
+    background-color: #ccc;
+}
+
+/* Focus effect */
+input[type="text"]:focus, textarea:focus {
+    outline: none;
+    border: 2px solid #28a745;
 }
