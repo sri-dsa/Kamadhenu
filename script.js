@@ -36,7 +36,6 @@ function setLanguage(code, name) {
 
     // Update the language button text
     document.getElementById('language-button').textContent = selectedLanguageName;
-    
     // Hide the dropdown smoothly
     toggleLanguageOptions();
 
@@ -59,16 +58,14 @@ function addMessage(text, type) {
     label.classList.add("message-label");
 
     if (type === "user-message") {
-        label.textContent = `User (${selectedLanguageName}):`;
+        label.textContent = `User: "${selectedLanguageName}"`; // User's chosen language
         messageDiv.style.alignSelf = "flex-end"; // Align to right
-        messageDiv.style.backgroundColor = "#0078ff"; // Blue for user
     } else if (type === "bot-message") {
-        label.textContent = `Response (${selectedLanguageName}):`;
+        label.textContent = `Response (${selectedLanguageName})`;
         messageDiv.style.alignSelf = "flex-start"; // Align to left
-        messageDiv.style.backgroundColor = "#25D366"; // Green for bot
     } else if (type === "error-message") {
-        label.textContent = "Error:";
-        messageDiv.style.backgroundColor = "red"; // Red for errors
+        label.textContent = "Error";
+        messageDiv.style.backgroundColor = "red"; // Red error background
     }
 
     messageDiv.textContent = text;
@@ -92,7 +89,7 @@ async function sendMessage() {
         input: [{ source: inputText }],
         config: {
             serviceId: "ai4bharat/indictrans-v2",
-            language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode } // Hindi to Selected Language
+            language: { sourceLanguage: "en", targetLanguage: selectedLanguageCode }
         }
     };
 
