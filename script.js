@@ -23,15 +23,15 @@ function setLanguage(code, name) {
     selectedLanguageCode = code;
     selectedLanguageName = name;
 
+    // Update the language button text
     document.getElementById('language-button').textContent = selectedLanguageName;
+    // Hide the language options
     document.getElementById('language-options').style.display = 'none';
 
     // Show the input field and enable it
     document.getElementById('inputText').style.display = 'block';  // Make input visible
     document.getElementById('sendButton').disabled = false;  // Enable send button
-
-    // Enable the input text field
-    document.getElementById('inputText').disabled = false;
+    document.getElementById('inputText').disabled = false;  // Enable the input text field
 }
 
 // Send Message
