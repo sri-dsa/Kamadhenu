@@ -1,232 +1,113 @@
-/* Base Styles */
+/* General styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #fff;
     margin: 0;
-    padding: 0;
-    background-color: #121212;
-    color: #fff;
-    overflow-x: hidden;
-    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    flex-direction: column;
 }
 
+/* Dark theme */
 body.dark-theme {
-    background-color: #121212;
+    background-color: #222;
     color: #fff;
 }
 
-body.light-theme {
-    background-color: #fff;
-    color: #000;
+/* Theme toggle (right-aligned) */
+.theme-toggle-container {
+    width: 100%;
+    text-align: right;
+    padding: 10px;
 }
 
-/* Chatbox Container */
-#chat {
+.theme-toggle-button {
+    background-color: yellow;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Chatbox */
+.chat-container {
+    width: 90%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    max-height: 80vh;
-    overflow-y: auto;
-    margin-bottom: 20px;
+    margin: 50px auto;
+    height: 90vh;
 }
 
+/* Dark theme chatbox */
+body.dark-theme .chat-container {
+    background-color: #444;
+}
+
+/* Chat messages */
+.chat-box {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 10px;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* User and bot messages */
 .message {
     padding: 10px;
-    margin: 5px;
     border-radius: 5px;
     max-width: 80%;
 }
 
 .user-message {
-    align-self: flex-end;
     background-color: #007bff;
-    color: #fff;
-    text-align: right;
-    font-size: 16px;
+    align-self: flex-end;
 }
 
 .bot-message {
-    align-self: flex-start;
     background-color: #28a745;
-    color: #fff;
-    text-align: left;
-    font-size: 16px;
+    color: white;
+    align-self: flex-start;
 }
 
 .error-message {
-    background-color: #dc3545;
-    color: #fff;
-    text-align: center;
-    font-size: 14px;
+    background-color: #28a745;
 }
 
-/* Input Area */
-#inputText {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    resize: none;
+/* Input section */
+.input-container {
+    display: flex;
+    align-items: center;
 }
 
-#sendButton {
-    padding: 10px 20px;
-    margin-top: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#sendButton:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-}
-
-/* Theme Toggle */
-#theme-toggle {
-    cursor: pointer;
-    font-size: 24px;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-}
-
-/* Language Button and Dropdown */
-#language-button {
-    background-color: #ff5733;
+/* Language button */
+.language-button {
+    background-color: red;
     color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    position: relative;
+    font-size: 1rem;
 }
 
-#language-options {
+/* Hide language menu initially */
+.language-options {
     display: none;
     position: absolute;
-    top: 50px;
-    right: 10px;
-    background-color: #fff;
-    color: #000;
+    background: white;
+    list-style: none;
+    padding: 0;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    padding: 10px;
 }
 
-#language-options div {
-    padding: 8px 10px;
+.language-options button {
+    border: none;
+    background: none;
+    padding: 5px;
     cursor: pointer;
-}
-
-#language-options div:hover {
-    background-color: #f1f1f1;
-}
-
-/* Language Toggle Behavior */
-#language-options {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-#language-options.show {
-    display: block;
-    opacity: 1;
-}
-
-/* Focus Effects */
-#inputText:focus {
-    outline: none;
-    border: 2px solid #007bff;
-}
-
-/* Smooth Dropdown Animations */
-#language-options {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-#language-options.show {
-    display: block;
-    opacity: 1;
-}
-
-/* Button Customizations */
-#sendButton {
-    font-size: 14px;
-    padding: 8px 16px;
-}
-
-#inputText {
-    font-size: 14px;
-    padding: 8px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #theme-toggle {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    #chat {
-        max-height: 60vh;
-        padding: 5px;
-    }
-
-    #inputText {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    #sendButton {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-}
-
-/* Language and Input Area */
-#inputText {
-    width: calc(100% - 20px);
-    margin-top: 20px;
-}
-
-/* Chat History Formatting */
-.message-label {
-    font-size: 12px;
-    color: #aaa;
-}
-
-/* Smooth Animations for Language Toggle */
-#language-options {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-#language-options.show {
-    display: block;
-    opacity: 1;
-}
-
-/* Additional Styling for Buttons */
-#sendButton {
-    font-size: 16px;
-    padding: 12px 20px;
-}
-
-/* Themed Button */
-#theme-toggle {
-    font-size: 20px;
-    padding: 10px;
 }
