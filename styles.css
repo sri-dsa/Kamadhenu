@@ -92,7 +92,7 @@ body.dark-theme .chat-container {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    position: relative;
+    position: relative; /* Ensure dropdown positions correctly */
 }
 
 /* Text input box */
@@ -139,7 +139,7 @@ body.dark-theme .chat-container {
     border-radius: 5px;
     position: absolute;
     width: 80%;  /* Adjust width to match the button width */
-    top: 0; /* Position language options at the top of the input area */
+    top: -10px; /* Position language options just above the input box */
     z-index: 10;
     display: none; /* Initially hidden */
 }
