@@ -82,20 +82,38 @@ body.light-theme .chat-container {
 }
 
 /* User and bot messages */
+/* Message container improvements */
 .message {
-    padding: 10px;
-    border-radius: 5px;
-    max-width: 80%;
-    font-size: 1rem;
+    padding: 12px 18px;
+    border-radius: 12px;
+    max-width: 85%; /* Prevents stretching */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap; /* Ensures proper text wrapping */
+    line-height: 1.5;
 }
 
-/* User message (Right aligned, Blue) */
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 85%; /* Match message width */
+}
+
+
+
+/* User message (WhatsApp-style, Right-aligned) */
 .user-message {
     background-color: #007bff;
-    align-self: flex-end;
     color: white;
-    text-align: right;
-    border-radius: 12px;
+    align-self: flex-end;
+    text-align: left;
+    border-radius: 18px 18px 4px 18px; /* Rounded on top, sharper at bottom-left */
+    padding: 12px 16px;
+    max-width: 95%; /* Matches WhatsApp sizing */
+    position: relative;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Bot message (Left aligned, Green, including error messages) */
@@ -104,28 +122,52 @@ body.light-theme .chat-container {
     color: white;
     align-self: flex-start;
     text-align: left;
-    border-radius: 12px;
+    border-radius: 18px 18px 18px 4px; /* Rounded on top, sharper at bottom-right */
+    padding: 12px 16px;
+    max-width: 95%;
+    position: relative;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* ========== MESSAGE LABELS (WhatsApp-style) ========== */
 .message-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;  /* Slightly smaller font to fit neatly */
     font-weight: bold;
+    max-width: 100%;  /* Ensure it doesn't overflow */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin-bottom: 3px;
+    display: block;
+    padding: 0 8px; /* Add slight padding to prevent overflow */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
 
 /* User text label */
 .user-label {
     text-align: right;
     color: lightgray;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 3px;
+    padding-right: 10px; /* Ensure it aligns properly within the box */
 }
+
+
 
 /* Bot text label */
 .bot-label {
     text-align: left;
     color: lightgray;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 3px;
+    padding-left: 10px; /* Keep consistent padding */
 }
-
 /* ========== INPUT FIELD & LANGUAGE SELECTION ========== */
 .input-container {
     display: flex;
@@ -160,19 +202,22 @@ body.light-theme .chat-container {
 
 /* Language options (Initially Hidden) */
 .language-options {
-    display: none; /* Hide by default */
+    display: flex; /* Hide by default */
     position: absolute;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     width: 100%;
     background: white;
     border-radius: 5px;
     padding: 10px;
+    max-width: 80%;
+    margin: 0 auto;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease-in-out;
     flex-wrap: wrap;  /* Makes it responsive in rows */
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
 }
 
 /* Show language options when active */
@@ -184,8 +229,11 @@ body.light-theme .chat-container {
 
 /* Language button inside the dropdown */
 .language-options button {
-    flex: 1 1 30%; /* Adjusts dynamically for responsiveness */
+    flex: 1 1 calc(20% - 10px); /* Adjusts dynamically for responsiveness */
     padding: 10px;
+    max-width: 150px;
+    min-width: 100px;
+    text-align: center;
     background: none;
     border: none;
     cursor: pointer;
@@ -194,7 +242,6 @@ body.light-theme .chat-container {
     background-color: #f4f4f9;
     border-radius: 5px;
     transition: background-color 0.3s;
-    text-align: center;
 }
 
 .language-options button:hover {
@@ -227,8 +274,16 @@ body.light-theme .chat-container {
         width: 100%;
     }
 
+    .user-message, .bot-message {
+        max-width: 90%; /* Make it even wider on smaller screens */
+    }
+}
+
     .language-options {
         width: 100%;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr); /* 10 buttons per row */
+        justify-content: center;
     }
 }
 
