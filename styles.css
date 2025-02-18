@@ -1,6 +1,8 @@
-/* General body styling */
+/* General styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -9,13 +11,19 @@ body {
     flex-direction: column;
 }
 
-/* Dark theme as default */
+/* Dark theme */
 body.dark-theme {
     background-color: #222;
     color: #fff;
 }
 
-/* Theme toggle button */
+/* Theme toggle (Left-aligned) */
+.theme-toggle-container {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
 .theme-toggle-button {
     background-color: yellow;
     border: none;
@@ -32,7 +40,7 @@ body.dark-theme {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin: 50px auto;
     height: 90vh;
 }
 
@@ -57,106 +65,49 @@ body.dark-theme .chat-container {
     padding: 10px;
     border-radius: 5px;
     max-width: 80%;
-    position: relative;
 }
 
-/* WhatsApp-style message tags */
-.message::before {
-    content: attr(data-label);
-    font-size: 0.8rem;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
-
-/* User messages */
 .user-message {
     background-color: #007bff;
     align-self: flex-end;
-    color: white;
 }
 
-/* Bot messages */
 .bot-message {
-    background-color: #28a745; /* WhatsApp green */
+    background-color: #28a745;
     color: white;
     align-self: flex-start;
 }
 
-/* Error messages */
 .error-message {
     background-color: red;
-    color: white;
 }
 
 /* Input section */
 .input-container {
     display: flex;
     align-items: center;
-    padding: 10px;
-    background: inherit;
-}
-
-textarea {
-    flex-grow: 1;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    min-height: 50px;
 }
 
 /* Language button */
-.language-menu {
-    position: relative;
-}
-
 .language-button {
     background-color: red;
     color: white;
     font-size: 1rem;
 }
 
-/* WhatsApp-style unfolding animation */
+/* Hide language menu initially */
 .language-options {
     display: none;
     position: absolute;
-    bottom: 50px;
-    left: 0;
     background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
     list-style: none;
     padding: 0;
+    border-radius: 5px;
 }
 
-.language-options li {
-    padding: 10px;
-}
-
-.language-options li button {
-    background: none;
+.language-options button {
     border: none;
-    cursor: pointer;
-}
-
-.language-options li button:hover {
-    background-color: #ddd;
-}
-
-/* Show languages on click */
-.language-menu.active .language-options {
-    display: block;
-}
-
-/* Send button */
-#sendButton {
-    background-color: grey;
-    color: white;
-    font-size: 1rem;
-    cursor: not-allowed;
-}
-
-#sendButton.active {
-    background-color: #007bff;
+    background: none;
+    padding: 5px;
     cursor: pointer;
 }
