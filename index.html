@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <!-- Theme Toggle Button (Left-aligned) -->
     <div class="theme-toggle-container">
         <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()">💡</button>
@@ -19,10 +18,10 @@
 
         <!-- Input Section -->
         <div class="input-container">
-            <textarea id="inputText" rows="3" placeholder="Type in Hindi..." disabled></textarea>
+            <textarea id="inputText" rows="3" placeholder="Type here..." disabled></textarea>
 
             <!-- Language Selection Button -->
-            <button id="language-button" class="language-button" onclick="toggleLanguageOptions()">Hindi ➝ Select Language</button>
+            <button id="language-button" class="language-button" onclick="toggleLanguageOptions()">Select Language</button>
 
             <!-- Language Selection Menu (Initially Hidden) -->
             <div id="language-options" class="language-options">
@@ -39,6 +38,7 @@
                 <button onclick="setLanguage('ml', 'Malayalam')">Malayalam</button>
                 <button onclick="setLanguage('ks', 'Kashmiri')">Kashmiri</button>
                 <button onclick="setLanguage('kn', 'Kannada')">Kannada</button>
+                <button onclick="setLanguage('hi', 'Hindi')">Hindi</button>
                 <button onclick="setLanguage('gu', 'Gujarati')">Gujarati</button>
                 <button onclick="setLanguage('gom', 'Goan Konkani')">Goan Konkani</button>
                 <button onclick="setLanguage('doi', 'Dogri')">Dogri</button>
@@ -59,7 +59,7 @@
         }
 
         function setLanguage(code, name) {
-            document.getElementById("language-button").innerText = `Hindi ➝ ${name}`;
+            document.getElementById("language-button").innerText = name;
             document.getElementById("inputText").disabled = false;
             document.getElementById("sendButton").disabled = false;
             
@@ -67,6 +67,5 @@
             document.getElementById("language-options").classList.remove("show");
         }
     </script>
-
 </body>
 </html>
