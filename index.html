@@ -24,7 +24,7 @@
             <button id="language-button" class="language-button" onclick="toggleLanguageOptions()">Select Language</button>
 
             <!-- Language Selection Menu (Initially Hidden) -->
-            <div id="language-options" class="language-options hidden">
+            <div id="language-options" class="language-options">
                 <button onclick="setLanguage('ta', 'Tamil')">Tamil</button>
                 <button onclick="setLanguage('te', 'Telugu')">Telugu</button>
                 <button onclick="setLanguage('ur', 'Urdu')">Urdu</button>
@@ -51,5 +51,21 @@
             <button id="sendButton" onclick="sendMessage()" disabled>भेजें/Send</button>
         </div>
     </div>
+
+    <script>
+        function toggleLanguageOptions() {
+            let options = document.getElementById("language-options");
+            options.classList.toggle("show");
+        }
+
+        function setLanguage(code, name) {
+            document.getElementById("language-button").innerText = name;
+            document.getElementById("inputText").disabled = false;
+            document.getElementById("sendButton").disabled = false;
+            
+            // Hide the language selection after choosing one
+            document.getElementById("language-options").classList.remove("show");
+        }
+    </script>
 </body>
 </html>
