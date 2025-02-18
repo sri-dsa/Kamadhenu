@@ -1,6 +1,6 @@
 const BHASHINI_API = "https://dhruva-api.bhashini.gov.in/services/inference/web-pipeline";
-const INFERENCE_API_KEY = "7tT86lGiAXxwRvTjvpYjBrtcejxHinFa-6Jb_yQwaJMz1P3NNcYZvQPOXpmPJVEx";
-const UDYAT_KEY = "53150dbcde-5d68-4505-a1e5-5299242d6847";
+const INFERENCE_API_KEY = "YOUR_API_KEY";
+const UDYAT_KEY = "YOUR_UDYAT_KEY";
 
 let selectedLanguageCode = "";
 let selectedLanguageName = "";
@@ -23,62 +23,34 @@ function setLanguage(code, name) {
     selectedLanguageCode = code;
     selectedLanguageName = name;
 
+    document.getElementById('language-button').textContent = selectedLanguageName;
     document.getElementById('language-options').style.display = 'none';
-    document.getElementById('inputText').placeholder = `Translate to ${selectedLanguageName}...`;
     document.getElementById('sendButton').disabled = false;
     document.getElementById('inputText').disabled = false;
 }
 
-// Send Message to Bhashini API
+// Send Message
 async function sendMessage() {
     const inputText = document.getElementById('inputText').value.trim();
-    
-    if (!inputText) {
-        alert(`Translate to ${selectedLanguageName}: Please enter text to translate!`);
-        return;
-    }
+    if (!inputText) return;
 
-    // Display user message
     const chatBox = document.getElementById("chat");
-    const userMessage = `<div class="message user-message">${inputText}</div>`;
-    chatBox.innerHTML += userMessage;
-    document.getElementById("inputText").value = "";
+    chatBox.innerHTML += `<div class="message user-message">${inputText}</div>`;
 
-    // Translation API Payload
     const payload = {
         input: [{ source: inputText }],
-        config: {
-            serviceId: "ai4bharat/indictrans-v2",
-            language: {
-                sourceLanguage: "en",
-                targetLanguage: selectedLanguageCode
-            }
-        }
+        config: { serviceId: "ai4bharat/indictrans-v2", language: { sourceLanguage: "en", targetLanguage: selectedLanguageCode }}
     };
 
     try {
         const response = await fetch(BHASHINI_API, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${INFERENCE_API_KEY}`,
-                "udyat-api-key": UDYAT_KEY
-            },
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${INFERENCE_API_KEY}`, "udyat-api-key": UDYAT_KEY },
             body: JSON.stringify(payload)
         });
-
         const data = await response.json();
-
-        if (data.output) {
-            const botMessage = `<div class="message bot-message">${data.output[0].target}</div>`;
-            chatBox.innerHTML += botMessage;
-        } else {
-            alert(`Translate to ${selectedLanguageName}: Translation failed.`);
-        }
-
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.innerHTML += `<div class="message bot-message">${selectedLanguageName}: ${data.output[0].target}</div>`;
     } catch (error) {
-        console.error("Error:", error);
-        alert(`Translate to ${selectedLanguageName}: Error contacting translation service.`);
+        chatBox.innerHTML += `<div class="message error-message">Error: Translation failed.</div>`;
     }
 }
