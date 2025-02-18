@@ -1,7 +1,7 @@
 /* General styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #222; /* Dark theme as default */
     color: #fff;
     margin: 0;
     display: flex;
@@ -11,10 +11,10 @@ body {
     flex-direction: column;
 }
 
-/* Dark theme */
-body.dark-theme {
-    background-color: #222;
-    color: #fff;
+/* Light theme styles */
+body.light-theme {
+    background-color: #f4f4f9;
+    color: #000;
 }
 
 /* Theme toggle (right-aligned) */
@@ -29,13 +29,24 @@ body.dark-theme {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 }
 
-/* Chatbox */
+/* Dark theme toggle icon */
+body.dark-theme .theme-toggle-button {
+    content: "☁️"; /* Cloud icon */
+}
+
+/* Light theme toggle icon */
+body.light-theme .theme-toggle-button {
+    content: "💡"; /* Shining bulb */
+}
+
+/* Chatbox container */
 .chat-container {
     width: 90%;
     max-width: 1200px;
-    background-color: #fff;
+    background-color: #444; /* Default dark theme */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -44,12 +55,12 @@ body.dark-theme {
     height: 90vh;
 }
 
-/* Dark theme chatbox */
-body.dark-theme .chat-container {
-    background-color: #444;
+/* Light theme chatbox */
+body.light-theme .chat-container {
+    background-color: #fff;
 }
 
-/* Chat messages */
+/* Chat messages container */
 .chat-box {
     overflow-y: auto;
     flex-grow: 1;
@@ -65,28 +76,37 @@ body.dark-theme .chat-container {
     padding: 10px;
     border-radius: 5px;
     max-width: 80%;
+    font-size: 1rem;
 }
 
+/* User message (Right aligned, Blue) */
 .user-message {
     background-color: #007bff;
     align-self: flex-end;
     color: white;
+    text-align: right;
+    border-radius: 12px;
 }
 
+/* Bot message (Left aligned, Green) */
 .bot-message {
     background-color: #28a745;
     color: white;
     align-self: flex-start;
+    text-align: left;
+    border-radius: 12px;
 }
 
+/* Error message */
 .error-message {
-    background-color: #28a745;
+    background-color: red;
     color: white;
     padding: 10px;
     border-radius: 5px;
+    text-align: center;
 }
 
-/* Input section */
+/* Input container */
 .input-container {
     display: flex;
     flex-direction: column;
@@ -95,17 +115,17 @@ body.dark-theme .chat-container {
     position: relative; /* Ensure dropdown positions correctly */
 }
 
-/* Text input box */
+/* Hidden input text (appears after language selection) */
 #inputText {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    display: none;  /* Initially hidden */
+    display: none; /* Initially hidden */
 }
 
-/* Language button */
+/* Language button (Expandable like WhatsApp's attachment icon) */
 .language-button {
     width: 80%;
     padding: 10px;
@@ -115,43 +135,35 @@ body.dark-theme .chat-container {
     border: none;
     cursor: pointer;
     margin: 10px 0;
+    position: relative;
 }
 
-/* Send button (same as language button) */
-#sendButton {
-    width: 80%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    margin: 10px 0;
-}
-
-/* Language options: make them grid-style responsive */
+/* Language dropdown (Hidden initially) */
 .language-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive grid layout */
-    gap: 10px;
-    padding: 10px;
+    display: none;
+    position: absolute;
+    top: -120px; /* Positioned above the input box */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
     background: white;
     border-radius: 5px;
-    position: absolute;
-    width: 80%;  /* Adjust width to match the button width */
-    top: -10px; /* Position language options just above the input box */
-    z-index: 10;
-    display: none; /* Initially hidden */
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease-in-out;
 }
 
-/* Show the language options when active */
+/* Smooth animation when opening */
 .language-options.show {
     display: block;
     opacity: 1;
+    transform: translateX(-50%) translateY(10px);
 }
 
 /* Language button inside the dropdown */
 .language-options button {
+    width: 100%;
     padding: 10px;
     background: none;
     border: none;
@@ -164,10 +176,48 @@ body.dark-theme .chat-container {
 }
 
 .language-options button:hover {
-    background-color: #ddd; /* Hover effect */
+    background-color: #ddd;
 }
 
-/* Responsive styles for mobile and laptop views */
+/* Send button */
+#sendButton {
+    width: 80%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+/* Disabled send button before language selection */
+#sendButton:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+/* Message labels (Above texts) */
+.message-label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+/* User text label */
+.user-label {
+    text-align: right;
+    color: lightgray;
+}
+
+/* Bot text label */
+.bot-label {
+    text-align: left;
+    color: lightgray;
+}
+
+/* Responsive design for mobile */
 @media screen and (max-width: 768px) {
     .language-button, #sendButton {
         width: 100%;
@@ -179,20 +229,7 @@ body.dark-theme .chat-container {
     }
 }
 
-/* User's text (blue) and Bot's text (green) alignment */
-.user-message {
-    background-color: #007bff;
-    align-self: flex-end;
-    color: white;
-}
-
-.bot-message {
-    background-color: #28a745;
-    color: white;
-    align-self: flex-start;
-}
-
-/* Dark Theme for messages */
+/* Dark theme styles for messages */
 body.dark-theme .user-message {
     background-color: #0066cc;
 }
@@ -201,43 +238,16 @@ body.dark-theme .bot-message {
     background-color: #1e7e34;
 }
 
-/* Adjustments for language selection behavior */
-.language-options {
-    position: absolute;
-    top: 0; /* Keep it on top of the input area */
-    width: 100%;
-    margin-top: 10px;  /* Slight space between input box and language options */
-}
-
-/* The input text and send button will appear after language selection */
+/* Input field adjustments */
 #inputText {
-    margin-top: 10px;  /* Adds space between the language options and the text input */
-}
-
-/* Language button inside the dropdown */
-.language-button {
-    width: 100%;
-    background-color: #ff4747; /* Updated color */
-}
-
-/* Text input adjustments */
-#inputText {
-    margin-top: 20px;  /* Adjusts space after selecting language */
+    margin-top: 10px;
     border-radius: 8px;
     border: 1px solid #aaa;
-}
-
-/* Language options visibility for desktop */
-.language-options.show {
-    opacity: 1;
     display: block;
-    position: absolute;
-    top: 60px;  /* Adjust position above the input box */
 }
 
 /* Send button adjustments */
 #sendButton {
     margin-top: 10px;
-    background-color: #0d6efd; /* Slightly updated send button color */
-    border-radius: 8px;
+    background-color: #0d6efd;
 }
