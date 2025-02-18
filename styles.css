@@ -172,6 +172,7 @@ body.light-theme .chat-container {
     flex-wrap: wrap;  /* Makes it responsive in rows */
     gap: 5px;
     justify-content: center;
+    align-items: center;
 }
 
 /* Show language options when active */
