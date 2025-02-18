@@ -86,20 +86,8 @@ body.dark-theme .chat-container {
 .input-container {
     display: flex;
     flex-direction: column;   /* Stack the elements */
-    align-items: stretch;     /* Full width alignment */
+    align-items: center;     /* Center align elements */
     width: 100%;              /* Full width */
-}
-
-
-/* Language button */
-.language-button {
-    width: 100%;           /* Full width */
-    padding: 10px;
-    background-color: red;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
 }
 
 /* Text input box */
@@ -111,7 +99,7 @@ body.dark-theme .chat-container {
     border: 1px solid #ccc;
 }
 
-/* Language button (reduced width, aligned with input) */
+/* Language button */
 .language-button {
     width: 80%;               /* Adjust width to 80% */
     padding: 10px;
@@ -132,29 +120,48 @@ body.dark-theme .chat-container {
     font-size: 1rem;
     border: none;
     cursor: pointer;
+    margin: 10px 0;           /* Space between buttons */
 }
 
-/* Hide language menu initially */
+/* Language options: make them grid-style responsive */
 .language-options {
-    display: none;
-    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive grid layout */
+    gap: 10px;
+    padding: 10px;
     background: white;
-    list-style: none;
-    padding: 0;
     border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    top: 50px; /* Adjust position */
+    z-index: 10;
 }
 
+/* Language button inside the dropdown */
 .language-options button {
-    border: none;
+    padding: 10px;
     background: none;
-    padding: 5px;
+    border: none;
     cursor: pointer;
+    color: #333;
+    font-size: 1rem;
+    background-color: #f4f4f9;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.language-options button:hover {
+    background-color: #ddd; /* Hover effect */
 }
 
 /* Responsive styles for mobile and laptop views */
 @media screen and (max-width: 768px) {
-    /* On mobile, language button and send button should be full width */
     .language-button, #sendButton {
         width: 100%;           /* Full width for buttons on mobile */
+    }
+
+    .language-options {
+        width: 100%;
+        top: 10px; /* Adjust top position for mobile */
     }
 }
