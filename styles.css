@@ -70,6 +70,7 @@ body.dark-theme .chat-container {
 .user-message {
     background-color: #007bff;
     align-self: flex-end;
+    color: white;
 }
 
 .bot-message {
@@ -79,20 +80,23 @@ body.dark-theme .chat-container {
 }
 
 .error-message {
-    background-color: #28a745;
+    background-color: #ff4136;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 /* Input section */
 .input-container {
     display: flex;
-    flex-direction: column;   /* Stack the elements */
-    align-items: center;     /* Center align elements */
-    width: 100%;              /* Full width */
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 /* Text input box */
 #inputText {
-    width: 100%;              /* Full width */
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -101,40 +105,45 @@ body.dark-theme .chat-container {
 
 /* Language button */
 .language-button {
-    width: 80%;               /* Adjust width to 80% */
+    width: 80%;
     padding: 10px;
     background-color: red;
     color: white;
     font-size: 1rem;
     border: none;
     cursor: pointer;
-    margin: 10px 0;           /* Space between buttons and text box */
+    margin: 10px 0;
 }
 
 /* Send button (same as language button) */
 #sendButton {
-    width: 80%;               /* Adjust width to 80% */
+    width: 80%;
     padding: 10px;
     background-color: #007bff;
     color: white;
     font-size: 1rem;
     border: none;
     cursor: pointer;
-    margin: 10px 0;           /* Space between buttons */
+    margin: 10px 0;
 }
 
 /* Language options: make them grid-style responsive */
 .language-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive grid layout */
-    gap: 10px;
-    padding: 10px;
-    background: white;
-    border-radius: 5px;
+    display: none;
     position: absolute;
     width: 100%;
-    top: 50px; /* Adjust position */
+    top: 50px;
     z-index: 10;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
+}
+
+.language-options.show {
+    display: block;
+    opacity: 1;
 }
 
 /* Language button inside the dropdown */
@@ -157,11 +166,33 @@ body.dark-theme .chat-container {
 /* Responsive styles for mobile and laptop views */
 @media screen and (max-width: 768px) {
     .language-button, #sendButton {
-        width: 100%;           /* Full width for buttons on mobile */
+        width: 100%;
     }
 
     .language-options {
         width: 100%;
-        top: 10px; /* Adjust top position for mobile */
+        top: 10px;
     }
+}
+
+/* User's text (blue) and Bot's text (green) alignment */
+.user-message {
+    background-color: #007bff;
+    align-self: flex-end;
+    color: white;
+}
+
+.bot-message {
+    background-color: #28a745;
+    color: white;
+    align-self: flex-start;
+}
+
+/* Dark Theme for messages */
+body.dark-theme .user-message {
+    background-color: #0066cc;
+}
+
+body.dark-theme .bot-message {
+    background-color: #1e7e34;
 }
