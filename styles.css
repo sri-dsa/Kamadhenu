@@ -200,3 +200,15 @@ body.dark-theme .user-message {
 body.dark-theme .bot-message {
     background-color: #1e7e34;
 }
+
+/* Adjustments for language selection behavior */
+.language-options {
+    display: block !important;  /* Language options are now displayed above the input field */
+    position: relative; /* Positioning now stays within the input box container */
+    top: auto; /* Reset 'top' to prevent it from interfering with the new positioning */
+    width: 100%; /* Make language options take up the entire width available */
+}
+
+#inputText {
+    margin-top: 10px;  /* Add some space to avoid clash between input and language options */
+}
