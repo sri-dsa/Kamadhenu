@@ -1,4 +1,4 @@
-/* General body styling */
+/* General styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -17,9 +17,15 @@ body.dark-theme {
     color: #fff;
 }
 
-/* Theme toggle button */
+/* Theme toggle (Left-aligned) */
+.theme-toggle-container {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
 .theme-toggle-button {
-    background-color: yellow; /* Customizable */
+    background-color: yellow;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
@@ -34,7 +40,7 @@ body.dark-theme {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin: 50px auto;
     height: 90vh;
 }
 
@@ -63,13 +69,13 @@ body.dark-theme .chat-container {
 
 .user-message {
     background-color: #007bff;
-    align-self: flex-end; /* Right-aligned */
+    align-self: flex-end;
 }
 
 .bot-message {
     background-color: #28a745;
     color: white;
-    align-self: flex-start; /* Left-aligned */
+    align-self: flex-start;
 }
 
 .error-message {
@@ -82,18 +88,26 @@ body.dark-theme .chat-container {
     align-items: center;
 }
 
-textarea, button {
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 5px;
-}
-
+/* Language button */
 .language-button {
-    background-color: #ff0000; /* #28a745 */
+    background-color: red;
     color: white;
     font-size: 1rem;
 }
 
-.language-button:hover {
-    background-color: #218838;
+/* Hide language menu initially */
+.language-options {
+    display: none;
+    position: absolute;
+    background: white;
+    list-style: none;
+    padding: 0;
+    border-radius: 5px;
+}
+
+.language-options button {
+    border: none;
+    background: none;
+    padding: 5px;
+    cursor: pointer;
 }
