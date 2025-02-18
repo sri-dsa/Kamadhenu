@@ -1,172 +1,170 @@
-/* General styling */
+/* Base Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #222;  /* Dark theme by default */
-    color: #fff;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-    flex-direction: column;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Dark theme (already set as default) */
 body.dark-theme {
-    background-color: #222;
+    background-color: #121212;
     color: #fff;
 }
 
-/* Theme toggle (left in laptop and centered in mobile) */
-.theme-toggle-container {
-    width: 100%;
-    text-align: left; /* Adjust for laptop */
-    padding: 10px;
+body.light-theme {
+    background-color: #fff;
+    color: #000;
 }
 
-.theme-toggle-button {
-    background-color: yellow;
-    border: none;
-    font-size: 2rem;  /* Increased size */
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-/* Chatbox */
-.chat-container {
-    width: 90%;
-    max-width: 800px;  /* Increased width for laptop view */
-    background-color: #444;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+/* Chatbox Container */
+#chat {
     display: flex;
     flex-direction: column;
-    margin: 20px auto;
-    height: 90vh;
-}
-
-/* Chat messages */
-.chat-box {
+    padding: 10px;
+    max-height: 80vh;
     overflow-y: auto;
-    flex-grow: 1;
-    padding: 10px;
-    max-height: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
-/* Input section adjustments */
-.input-container {
-    display: flex;
-    align-items: center;
-    width: 100%;  /* Full width */
-    justify-content: space-between;  /* Align buttons horizontally */
-}
-
-/* Input text box */
-textarea#inputText {
-    width: 70%;  /* Increased width */
+.message {
     padding: 10px;
+    margin: 5px;
     border-radius: 5px;
-    font-size: 1rem;
+    max-width: 80%;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: #fff;
+    text-align: right;
+    font-size: 16px;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #28a745;
+    color: #fff;
+    text-align: left;
+    font-size: 16px;
+}
+
+.error-message {
+    background-color: #dc3545;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Input Area */
+#inputText {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
     resize: none;
 }
 
-/* Language button & Send button (same size) */
-.language-button, #sendButton {
-    width: 15%;  /* Equal width for both */
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-/* Language button */
-.language-button {
-    background-color: red;
-    color: white;
-}
-
-/* Send button */
 #sendButton {
-    background-color: green;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#sendButton:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+/* Theme Toggle */
+#theme-toggle {
+    cursor: pointer;
+    font-size: 24px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+/* Language Button and Dropdown */
+#language-button {
+    background-color: #ff5733;
     color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
 }
 
-/* Responsive adjustments for mobile */
-@media (max-width: 768px) {
-    .theme-toggle-container {
-        text-align: center; /* Center the toggle on mobile */
-    }
-
-    .input-container {
-        flex-direction: column;  /* Stack buttons on mobile */
-        align-items: center;
-    }
-
-    textarea#inputText {
-        width: 90%;  /* Increase text box size */
-        margin-bottom: 10px;
-    }
-
-    .language-button, #sendButton {
-        width: 90%;  /* Make buttons full width on mobile */
-        margin-bottom: 10px;
-    }
-
-    .chat-container {
-        max-width: 100%;
-    }
-}
-
-/* Language options styling */
-.language-options {
+#language-options {
     display: none;
     position: absolute;
-    background: white;
-    list-style: none;
-    padding: 0;
+    top: 50px;
+    right: 10px;
+    background-color: #fff;
+    color: #000;
     border-radius: 5px;
-    width: 200px;  /* Fix the width of the dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    padding: 10px;
 }
 
-.language-options button {
-    border: none;
-    background: none;
-    padding: 10px;
+#language-options div {
+    padding: 8px 10px;
     cursor: pointer;
-    width: 100%;
 }
 
-/* Chat input aesthetics */
-input[type="text"], textarea#inputText {
-    background: #333;
-    color: white;
-    border: 2px solid #555;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 1.1rem;
+#language-options div:hover {
+    background-color: #f1f1f1;
 }
 
-textarea#inputText:focus {
-    border-color: #28a745;  /* Green focus */
-}
-
-/* Input box styling */
-.input-container {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Send button (disabled state) */
-#sendButton:disabled {
-    background-color: #ccc;
-}
-
-/* Focus effect */
-input[type="text"]:focus, textarea:focus {
+#inputText:focus {
     outline: none;
-    border: 2px solid #28a745;
+    border: 2px solid #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #theme-toggle {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #chat {
+        max-height: 60vh;
+        padding: 5px;
+    }
+
+    #inputText {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #sendButton {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* Smooth Dropdown Animations */
+#language-options {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#language-options.show {
+    display: block;
+    opacity: 1;
 }
