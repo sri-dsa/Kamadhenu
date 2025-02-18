@@ -50,27 +50,30 @@ function addMessage(text, type) {
     const chatBox = document.getElementById("chat");
 
     // Create message wrapper
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", type);
+    const messageWrapper = document.createElement("div");
+    messageWrapper.classList.add("message-wrapper", type);
 
-    // Add label above message
+    // Create label
     const label = document.createElement("div");
     label.classList.add("message-label");
 
     if (type === "user-message") {
-        label.textContent = `User: "${selectedLanguageName}"`; // User's chosen language
-        messageDiv.style.alignSelf = "flex-end"; // Align to right
+        label.textContent = "Text in Hindi"; // Static for user messages
+        messageWrapper.style.alignSelf = "flex-end"; // Align to right
     } else if (type === "bot-message") {
-        label.textContent = `Response (${selectedLanguageName})`;
-        messageDiv.style.alignSelf = "flex-start"; // Align to left
-    } else if (type === "error-message") {
-        label.textContent = "Error";
-        messageDiv.style.backgroundColor = "red"; // Red error background
+        label.textContent = `Text in ${selectedLanguageName}`; // Dynamic for bot messages
+        messageWrapper.style.alignSelf = "flex-start"; // Align to left
     }
 
+    // Create message bubble
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message", type);
     messageDiv.textContent = text;
-    chatBox.appendChild(label);
-    chatBox.appendChild(messageDiv);
+
+    // Attach label above message bubble
+    messageWrapper.appendChild(label);
+    messageWrapper.appendChild(messageDiv);
+    chatBox.appendChild(messageWrapper);
 
     // Auto-scroll to latest message
     chatBox.scrollTop = chatBox.scrollHeight;
@@ -89,9 +92,12 @@ async function sendMessage() {
         input: [{ source: inputText }],
         config: {
             serviceId: "ai4bharat/indictrans-v2",
-            language: { sourceLanguage: "en", targetLanguage: selectedLanguageCode }
+            language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode }
         }
     };
+
+    // Clear the input field after sending the message
+    document.getElementById('inputText').value = '';
 
     try {
         const response = await fetch(BHASHINI_API, {
@@ -112,7 +118,7 @@ async function sendMessage() {
             throw new Error("Invalid response from API");
         }
     } catch (error) {
-        addMessage("Translation failed. Please try again.", "error-message");
+        addMessage("Error: Translation failed. Please try again.", "bot-message"); // Error inside bot response
     }
 }
 
@@ -120,4 +126,16 @@ async function sendMessage() {
 window.onload = () => {
     document.getElementById('inputText').style.display = 'none';  // Hide input initially
     document.getElementById('sendButton').disabled = true;  // Disable send button initially
+
+    const inputField = document.getElementById("inputText");
+
+    // Check if input field exists before adding event listener
+    if (inputField) {
+        inputField.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevents new lines in the input field
+                sendMessage(); // Calls the sendMessage function
+            }
+        });
+    }
 };
