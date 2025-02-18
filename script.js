@@ -25,7 +25,12 @@ function setLanguage(code, name) {
 
     document.getElementById('language-button').textContent = selectedLanguageName;
     document.getElementById('language-options').style.display = 'none';
-    document.getElementById('sendButton').disabled = false;
+
+    // Show the input field and enable it
+    document.getElementById('inputText').style.display = 'block';  // Make input visible
+    document.getElementById('sendButton').disabled = false;  // Enable send button
+
+    // Enable the input text field
     document.getElementById('inputText').disabled = false;
 }
 
@@ -54,3 +59,9 @@ async function sendMessage() {
         chatBox.innerHTML += `<div class="message error-message">Error: Translation failed.</div>`;
     }
 }
+
+// Initially hide the input box and the send button
+window.onload = () => {
+    document.getElementById('inputText').style.display = 'none';  // Hide input initially
+    document.getElementById('sendButton').disabled = true;  // Disable send button initially
+};
