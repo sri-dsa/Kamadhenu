@@ -85,8 +85,9 @@ body.dark-theme .chat-container {
 /* Input section */
 .input-container {
     display: flex;
-    align-items: center;
-    width: 100%;  /* Full width */
+    flex-direction: column;   /* Stack the elements */
+    align-items: stretch;     /* Full width alignment */
+    width: 100%;              /* Full width */
 }
 
 
@@ -103,16 +104,28 @@ body.dark-theme .chat-container {
 
 /* Text input box */
 #inputText {
-    width: 100%;           /* Full width */
+    width: 100%;              /* Full width */
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-/* Send button */
+/* Language button (reduced width, aligned with input) */
+.language-button {
+    width: 80%;               /* Adjust width to 80% */
+    padding: 10px;
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;           /* Space between buttons and text box */
+}
+
+/* Send button (same as language button) */
 #sendButton {
-    width: 100%;           /* Full width */
+    width: 80%;               /* Adjust width to 80% */
     padding: 10px;
     background-color: #007bff;
     color: white;
@@ -138,15 +151,10 @@ body.dark-theme .chat-container {
     cursor: pointer;
 }
 
-
-@media screen and (min-width: 768px) {
-    .chat-container {
-        width: 90%;           /* Ensures the chat container takes 90% of the screen */
-    }
-}
-
-@media screen and (max-width: 767px) {
-    .chat-container {
-        width: 100%;           /* Full width on mobile */
+/* Responsive styles for mobile and laptop views */
+@media screen and (max-width: 768px) {
+    /* On mobile, language button and send button should be full width */
+    .language-button, #sendButton {
+        width: 100%;           /* Full width for buttons on mobile */
     }
 }
