@@ -47,11 +47,12 @@
                 <button onclick="setLanguage('brx', 'Bodo')">Bodo</button>
                 <button onclick="setLanguage('bn', 'Bengali')">Bengali</button>
                 <button onclick="setLanguage('as', 'Assamese')">Assamese</button>
+            <div class="button-container">
+                <button id="micButton" class="icon-button" onclick="startRecording()">🎤</button>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                <button id="imageButton" class="icon-button" onclick="document.getElementById('imageInput').click()">📷</button>
+                <button id="sendButton" onclick="sendMessage()" disabled>➡️</button>
             </div>
-
-            <!-- Send Button (Initially Disabled) -->
-            <button id="sendButton" onclick="sendMessage()" disabled>भेजें/Send</button>
-        </div>
     </div>
 </body>
 </html>
