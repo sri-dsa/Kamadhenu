@@ -36,14 +36,6 @@ body.light-theme {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Light and Dark theme icons */
-body.dark-theme .theme-toggle-button::before {
-    content: "☁️"; /* Cloud icon */
-}
-
-body.light-theme .theme-toggle-button::before {
-    content: "💡"; /* Shining bulb */
-}
 
 /* Mobile: Center the theme toggle */
 @media screen and (max-width: 768px) {
