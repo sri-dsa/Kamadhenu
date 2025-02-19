@@ -11,9 +11,11 @@ function toggleTheme() {
     const themeButton = document.getElementById('theme-toggle');
 
     if (document.body.classList.contains('light-theme')) {
-        themeButton.textContent = "💡";  // Light mode icon
+        themeButton.textContent = "💡";
+        themeButton.style.backgroundColor = "yellow"// Light mode icon
     } else {
-        themeButton.textContent = "🌙";  // Dark mode icon
+        themeButton.textContent = "🌙";
+        themeButton.style.backgroundColor = "whitesmoke"// Dark mode icon
     }
 }
 
