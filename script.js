@@ -12,10 +12,10 @@ function toggleTheme() {
 
     if (document.body.classList.contains('light-theme')) {
         themeButton.textContent = "💡";
-        themeButton.style.backgroundColor = "yellow"// Light mode icon
+        themeButton.style.backgroundColor = "yellow"; // Light mode icon
     } else {
         themeButton.textContent = "🌙";
-        themeButton.style.backgroundColor = "whitesmoke"// Dark mode icon
+        themeButton.style.backgroundColor = "whitesmoke"; // Dark mode icon
     }
 }
 
@@ -47,7 +47,7 @@ function setLanguage(code, name) {
     document.getElementById('inputText').disabled = false;  
 }
 
-// Function to add a message to chat
+// Function to add a message to chat (with optional buttons for bot responses)
 function addMessage(text, type) {
     const chatBox = document.getElementById("chat");
 
@@ -60,11 +60,14 @@ function addMessage(text, type) {
     label.classList.add("message-label");
 
     if (type === "user-message") {
-        label.textContent = "Text in Hindi"; // Static for user messages
-        messageWrapper.style.alignSelf = "flex-end"; // Align to right
+        label.textContent = `Text in ${selectedLanguageName}`;
+        messageWrapper.style.alignSelf = "flex-end"; // Align right
     } else if (type === "bot-message") {
-        label.textContent = `Text in ${selectedLanguageName}`; // Dynamic for bot messages
-        messageWrapper.style.alignSelf = "flex-start"; // Align to left
+        label.textContent = `Text in ${selectedLanguageName}`;
+        messageWrapper.style.alignSelf = "flex-start"; // Align left
+    } else if (type === "error-message") {
+        label.textContent = "Error: Translation failed. Please try again.";
+        messageWrapper.style.alignSelf = "flex-start"; // Align left
     }
 
     // Create message bubble
@@ -72,13 +75,48 @@ function addMessage(text, type) {
     messageDiv.classList.add("message", type);
     messageDiv.textContent = text;
 
-    // Attach label above message bubble
+    // Append label and message
     messageWrapper.appendChild(label);
     messageWrapper.appendChild(messageDiv);
+
+    // Add buttons only for bot messages
+    if (type === "bot-message") {
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+
+        // Audio button
+        const audioButton = document.createElement("button");
+        audioButton.textContent = "🔊";
+        audioButton.classList.add("audio-button");
+        audioButton.onclick = () => playAudio(text, selectedLanguageCode);
+        buttonContainer.appendChild(audioButton);
+
+        // Image button
+        const imageButton = document.createElement("button");
+        imageButton.textContent = "🖼️";
+        imageButton.classList.add("image-button");
+        imageButton.onclick = () => generateImage(text);
+        buttonContainer.appendChild(imageButton);
+
+        messageWrapper.appendChild(buttonContainer);
+    }
+
     chatBox.appendChild(messageWrapper);
 
     // Auto-scroll to latest message
     chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Play audio function (Text-to-Speech)
+function playAudio(text, languageCode) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = languageCode || "en"; // Default to English if not set
+    speechSynthesis.speak(utterance);
+}
+
+// Generate image function (Placeholder API)
+function generateImage(text) {
+    alert(`Image generation is not implemented yet, but should create an image based on: "${text}"`);
 }
 
 // Send Message Function
@@ -120,7 +158,7 @@ async function sendMessage() {
             throw new Error("Invalid response from API");
         }
     } catch (error) {
-        addMessage("Error: Translation failed. Please try again.", "bot-message"); // Error inside bot response
+        addMessage("Error: Translation failed. Please try again.", "error-message");
     }
 }
 
