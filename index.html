@@ -52,21 +52,5 @@
             <button id="sendButton" onclick="sendMessage()" disabled>भेजें/Send</button>
         </div>
     </div>
-
-    <script>
-        function toggleLanguageOptions() {
-            let options = document.getElementById("language-options");
-            options.classList.toggle("show");
-        }
-
-        function setLanguage(code, name) {
-            document.getElementById("language-button").innerText = name;
-            document.getElementById("inputText").disabled = false;
-            document.getElementById("sendButton").disabled = false;
-            
-            // Hide the language selection after choosing one
-            document.getElementById("language-options").classList.remove("show");
-        }
-    </script>
 </body>
 </html>
