@@ -120,6 +120,7 @@ function generateImage(text) {
 }
 
 // Send Message Function
+// Send Message Function (Modified for Transliteration)
 async function sendMessage() {
     const inputText = document.getElementById('inputText').value.trim();
     if (!inputText) return;
@@ -127,12 +128,12 @@ async function sendMessage() {
     // Show user's message
     addMessage(inputText, "user-message");
 
-    // Prepare API payload
+    // Prepare API payload for transliteration
     const payload = {
         input: [{ source: inputText }],
         config: {
-            serviceId: "ai4bharat/indictrans-v2",
-            language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode }
+            serviceId: "ai4bharat/indicxlit", // Changed to transliteration service
+            language: { sourceLanguage: "en", targetLanguage: selectedLanguageCode }
         }
     };
 
@@ -158,9 +159,10 @@ async function sendMessage() {
             throw new Error("Invalid response from API");
         }
     } catch (error) {
-        addMessage("Error: Translation failed. Please try again.", "error-message");
+        addMessage("Error: Transliteration failed. Please try again.", "error-message");
     }
 }
+
 
 // Initialize UI on Load
 window.onload = () => {
