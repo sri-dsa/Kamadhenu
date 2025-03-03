@@ -12,8 +12,10 @@
     <!-- Theme Toggle Button (Left-aligned) -->
     <div class="theme-toggle-container">
         <button id="theme-toggle" class="theme-toggle-button" onclick="toggleTheme()" 
-    style="background-color: whitesmoke; color: black;">🌙</button>
+        style="background-color: whitesmoke; color: black;">🌙</button>
     </div>
+
+    <!-- WhatsApp and Telegram Buttons -->
     <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px; width: 100%;">
         
         <!-- WhatsApp Button -->
@@ -35,9 +37,7 @@
             <img src="tl.png" alt="Telegram" style="width: 24px; height: 24px;">
             Add to Telegram
         </button>
-
     </div>
-</div>
 
     <script>
     function addToWhatsApp() {
@@ -47,7 +47,7 @@
     function addToTelegram() {
         window.open('https://t.me/YOUR-BOT-USERNAME', '_blank');
     }
-</script>
+    </script>
 
     <div class="chat-container">
         <div id="chat" class="chat-box"></div>
@@ -81,12 +81,17 @@
                 <button onclick="setLanguage('brx', 'Bodo')">Bodo</button>
                 <button onclick="setLanguage('bn', 'Bengali')">Bengali</button>
                 <button onclick="setLanguage('as', 'Assamese')">Assamese</button>
-                </div>
+            </div>
+
+            <!-- Buttons for Mic, Image Upload, and Send -->
             <div class="button-container">
                 <button id="micButton" class="icon-button" onclick="startRecording()">🎤</button>
                 <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
                 <button id="imageButton" class="icon-button" onclick="document.getElementById('imageInput').click()">📷</button>
                 <button id="sendButton" onclick="sendMessage()" disabled>Translate➡️</button>
             </div>
+        </div>
+    </div>
+
 </body>
 </html>
