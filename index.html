@@ -28,6 +28,13 @@
             Add to WhatsApp
         </button>
 
+        <button onclick="refresh()" style="
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 15px; border: none; cursor: pointer;
+            font-weight: bold; border-radius: 8px;">
+            <img src="kamadhenu.png" alt="logo" style="width: 48px; height: 48px;">
+        </button>
+
         <!-- Telegram Button -->
         <button onclick="addToTelegram()" style="
             display: flex; align-items: center; gap: 8px;
@@ -42,6 +49,10 @@
     <script>
     function addToWhatsApp() {
         window.open('https://api.whatsapp.com/send?phone=YOUR-BOT-NUMBER', '_blank');
+    }
+
+    function refresh() {
+        window.open('https://sri-dsa.github.io/Kamadhenu/', '_blank');
     }
 
     function addToTelegram() {
