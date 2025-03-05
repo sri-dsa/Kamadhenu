@@ -71,7 +71,7 @@ function addMessage(text, type, audio = null, image = null) {
         label.textContent = `Text in ${selectedLanguageName}`;
         messageWrapper.style.alignSelf = "flex-start"; // Align left
     } else if (type === "error-message") {
-        label.textContent = "Error: Translation failed. Please try again.";
+        label.textContent = "Error: Backend Integration failed. Please try again.";
         messageWrapper.style.alignSelf = "flex-start"; // Align left
     }
 
