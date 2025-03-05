@@ -102,7 +102,22 @@
                 <button id="micButton" class="icon-button" onclick="toggleRecording()">🎤</button>
                 <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageSelect(event)">
                 <button id="imageButton" class="icon-button" onclick="document.getElementById('imageInput').click()">📷</button>
-                <button id="Trans" class ="icon-button" onclick="document.getElementById('imageInput').click()">Transliteration </button>
+                <button id="Trans" class="icon-button" onclick="toggleTransliterationColor()">Transliteration</button>
+
+<script>
+    function toggleTransliterationColor() {
+        const button = document.getElementById('Trans');
+        
+        // Toggle the background color when clicked
+        if (button.style.backgroundColor === 'green') {
+            button.style.backgroundColor = '';  // Revert to the original color
+        } else {
+            button.style.backgroundColor = 'green';  // Change to green when clicked
+        }
+
+        // Optionally, you can also change the text color or other styles if needed
+    }
+</script>
                 <button id="sendButton" onclick="sendMessage()" disabled>Translate➡️</button>
             </div>
         </div>
