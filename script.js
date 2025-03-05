@@ -5,6 +5,11 @@ const UDYAT_KEY = "53150dbcde-5d68-4505-a1e5-5299242d6847";
 let selectedLanguageCode = "";
 let selectedLanguageName = "";
 
+let isRecording = false;
+let mediaRecorder;
+let audioBlob;
+let audioURL;
+
 // Theme Toggle Function
 function toggleTheme() {
     document.body.classList.toggle('light-theme');
@@ -48,7 +53,7 @@ function setLanguage(code, name) {
 }
 
 // Function to add a message to chat (with optional buttons for bot responses)
-function addMessage(text, type) {
+function addMessage(text, type, audio = null, image = null) {
     const chatBox = document.getElementById("chat");
 
     // Create message wrapper
@@ -79,6 +84,29 @@ function addMessage(text, type) {
     messageWrapper.appendChild(label);
     messageWrapper.appendChild(messageDiv);
 
+    // If audio is passed, create an audio element
+    if (audio) {
+        const audioElement = document.createElement("audio");
+        audioElement.controls = true;
+        audioElement.src = audio;
+        messageWrapper.appendChild(audioElement);
+    }
+
+    // If image is passed, create an image element
+    if (image) {
+        const imgElement = document.createElement("img");
+        imgElement.src = image;
+        imgElement.classList.add("image-preview");
+        messageWrapper.appendChild(imgElement);
+
+        // Add delete button for image
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "❌";
+        deleteButton.classList.add("delete-image");
+        deleteButton.onclick = () => removeImage(imgElement);
+        messageWrapper.appendChild(deleteButton);
+    }
+
     // Add buttons only for bot messages
     if (type === "bot-message") {
         const buttonContainer = document.createElement("div");
@@ -95,7 +123,7 @@ function addMessage(text, type) {
         const imageButton = document.createElement("button");
         imageButton.textContent = "🖼️";
         imageButton.classList.add("image-button");
-        imageButton.onclick = () => generateImage(text);
+        imageButton.onclick = () => openImageInput();
         buttonContainer.appendChild(imageButton);
 
         messageWrapper.appendChild(buttonContainer);
@@ -114,9 +142,58 @@ function playAudio(text, languageCode) {
     speechSynthesis.speak(utterance);
 }
 
-// Generate image function (Placeholder API)
-function generateImage(text) {
-    alert(`Image generation is not implemented yet, but should create an image based on: "${text}"`);
+// Start/Stop Recording Audio
+function toggleRecording() {
+    const inputField = document.getElementById('inputText');
+    if (isRecording) {
+        mediaRecorder.stop();
+        inputField.disabled = false;
+        document.getElementById('audioPreview').style.display = "none";
+    } else {
+        startRecording();
+        inputField.disabled = true;
+        document.getElementById('audioPreview').style.display = "block";
+    }
+    isRecording = !isRecording;
+}
+
+// Start Audio Recording
+async function startRecording() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    let audioChunks = [];
+
+    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+    mediaRecorder.onstop = () => {
+        audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        audioURL = URL.createObjectURL(audioBlob);
+        addMessage("Audio recorded", "user-message", audioURL);
+    };
+
+    mediaRecorder.start();
+}
+
+// Handle Image Input
+function openImageInput() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = handleImageSelect;
+    input.click();
+}
+
+// Handle Image Selection
+function handleImageSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        addMessage("Image selected", "user-message", null, imageUrl);
+    }
+}
+
+// Remove Image
+function removeImage(imgElement) {
+    imgElement.parentElement.removeChild(imgElement);
 }
 
 // Send Message Function
