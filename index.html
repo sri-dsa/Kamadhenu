@@ -108,14 +108,14 @@
     function toggleTransliterationColor() {
         const button = document.getElementById('Trans');
         
-        // Toggle the background color when clicked
+        // Toggle the background color and font color when clicked
         if (button.style.backgroundColor === 'green') {
             button.style.backgroundColor = '';  // Revert to the original color
+            button.style.color = '';  // Revert font color to the original color
         } else {
             button.style.backgroundColor = 'green';  // Change to green when clicked
+            button.style.color = 'white';  // Change font color to white when background is green
         }
-
-        // Optionally, you can also change the text color or other styles if needed
     }
 </script>
                 <button id="sendButton" onclick="sendMessage()" disabled>Translate➡️</button>
