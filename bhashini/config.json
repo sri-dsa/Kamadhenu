@@ -1,1 +1,6 @@
-
+{
+  "api_key": "53150dbcde-5d68-4505-a1e5-5299242d6847",
+  "bhashini_api_url": "https://api.bhashini.com/ulca/apis/v0/model/getModelsPipeline",
+  "supported_languages": ["en", "hi", "te", "ml", "ta"],
+  "aws_model_endpoint": "https://ap-south-1.console.aws.amazon.com/s3/upload/leeds-bucket-123?region=ap-south-1&bucketType=general"
+}
