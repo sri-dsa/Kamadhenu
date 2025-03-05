@@ -10,152 +10,79 @@ let mediaRecorder;
 let audioBlob;
 let audioURL;
 
-// Theme Toggle Function
 function toggleTheme() {
     document.body.classList.toggle('light-theme');
     const themeButton = document.getElementById('theme-toggle');
-
-    if (document.body.classList.contains('light-theme')) {
-        themeButton.textContent = "💡";
-        themeButton.style.backgroundColor = "yellow"; // Light mode icon
-    } else {
-        themeButton.textContent = "🌙";
-        themeButton.style.backgroundColor = "whitesmoke"; // Dark mode icon
-    }
+    themeButton.textContent = document.body.classList.contains('light-theme') ? "💡" : "🌙";
+    themeButton.style.backgroundColor = document.body.classList.contains('light-theme') ? "yellow" : "whitesmoke";
 }
 
-// Toggle Language Dropdown (WhatsApp-style)
 function toggleLanguageOptions() {
     const menu = document.getElementById('language-options');
-    if (menu.classList.contains('show')) {
-        menu.classList.remove('show');
-        setTimeout(() => (menu.style.display = "none"), 300);  // Smooth fade-out
-    } else {
-        menu.style.display = "block";
-        setTimeout(() => menu.classList.add('show'), 10);  // Smooth fade-in
-    }
+    menu.style.display = menu.classList.toggle('show') ? "block" : "none";
 }
 
-// Set Selected Language
 function setLanguage(code, name) {
     selectedLanguageCode = code;
     selectedLanguageName = name;
-
-    // Update the language button text
     document.getElementById('language-button').textContent = selectedLanguageName;
-    // Hide the dropdown smoothly
     toggleLanguageOptions();
-
-    // Show the input field and enable it
     document.getElementById('inputText').style.display = 'block';  
-    document.getElementById('sendButton').disabled = false;  
-    document.getElementById('inputText').disabled = false;  
+    document.getElementById('sendButton').disabled = false;
 }
 
-// Function to add a message to chat (with optional buttons for bot responses)
 function addMessage(text, type, audio = null, image = null) {
     const chatBox = document.getElementById("chat");
-
-    // Create message wrapper
     const messageWrapper = document.createElement("div");
     messageWrapper.classList.add("message-wrapper", type);
-
-    // Create label
+    
     const label = document.createElement("div");
     label.classList.add("message-label");
-
-    if (type === "user-message") {
-        label.textContent = `Text in ${selectedLanguageName}`;
-        messageWrapper.style.alignSelf = "flex-end"; // Align right
-    } else if (type === "bot-message") {
-        label.textContent = `Text in ${selectedLanguageName}`;
-        messageWrapper.style.alignSelf = "flex-start"; // Align left
-    } else if (type === "error-message") {
-        label.textContent = "Error: Model connection failed. Please try again.";
-        messageWrapper.style.alignSelf = "flex-start"; // Align left
-    }
-
-    // Create message bubble
+    label.textContent = type === "user-message" || type === "bot-message" ? `Text in ${selectedLanguageName}` : "Error: Model connection failed. Please try again.";
+    messageWrapper.appendChild(label);
+    
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message", type);
     messageDiv.textContent = text;
-
-    // Append label and message
-    messageWrapper.appendChild(label);
     messageWrapper.appendChild(messageDiv);
-
-    // If audio is passed, create an audio element
+    
     if (audio) {
         const audioElement = document.createElement("audio");
         audioElement.controls = true;
         audioElement.src = audio;
         messageWrapper.appendChild(audioElement);
     }
-
-    // If image is passed, create an image element
+    
     if (image) {
         const imgElement = document.createElement("img");
         imgElement.src = image;
         imgElement.classList.add("image-preview");
         messageWrapper.appendChild(imgElement);
-
-        // Add delete button for image
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "❌";
-        deleteButton.classList.add("delete-image");
-        deleteButton.onclick = () => removeImage(imgElement);
-        messageWrapper.appendChild(deleteButton);
     }
-
-    // Add buttons only for bot messages
-    if (type === "bot-message") {
-        const buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
-
-        // Audio button
-        const audioButton = document.createElement("button");
-        audioButton.textContent = "🔊";
-        audioButton.classList.add("audio-button");
-        audioButton.onclick = () => playAudio(text, selectedLanguageCode);
-        buttonContainer.appendChild(audioButton);
-
-        // Image button
-        const imageButton = document.createElement("button");
-        imageButton.textContent = "🖼️";
-        imageButton.classList.add("image-button");
-        imageButton.onclick = () => openImageInput();
-        buttonContainer.appendChild(imageButton);
-
-        messageWrapper.appendChild(buttonContainer);
-    }
-
+    
     chatBox.appendChild(messageWrapper);
-
-    // Auto-scroll to latest message
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Play audio function (Text-to-Speech)
 function playAudio(text, languageCode) {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = languageCode || "en"; // Default to English if not set
+    utterance.lang = languageCode || "en";
     speechSynthesis.speak(utterance);
 }
 
 function toggleRecording() {
     const inputField = document.getElementById('inputText');
     const audioPreviewContainer = document.getElementById('audioPreview');
-
+    
     if (isRecording) {
         mediaRecorder.stop();
         inputField.disabled = false;
-        audioPreviewContainer.style.display = "none";  // Hide preview when stopped
+        audioPreviewContainer.style.display = "none";
     } else {
         startRecording();
         inputField.disabled = true;
-        audioPreviewContainer.style.display = "block";  // Show preview while recording
+        audioPreviewContainer.style.display = "block";
     }
-
     isRecording = !isRecording;
 }
 
@@ -163,136 +90,80 @@ async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(stream);
     let audioChunks = [];
-
     mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
     mediaRecorder.onstop = () => {
         audioBlob = new Blob(audioChunks, { type: "audio/wav" });
         audioURL = URL.createObjectURL(audioBlob);
         displayAudioPreview(audioURL);
     };
-
     mediaRecorder.start();
 }
-// Display Audio Preview
+
 function displayAudioPreview(audioURL) {
     const audioPreviewContainer = document.getElementById('audioPreview');
-    audioPreviewContainer.innerHTML = '';  // Clear any previous content
-
+    audioPreviewContainer.innerHTML = '';
+    
     const audioElement = document.createElement("audio");
     audioElement.controls = true;
     audioElement.src = audioURL;
-
+    
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "❌";
-    deleteButton.classList.add("delete-audio");
     deleteButton.onclick = () => {
         audioPreviewContainer.style.display = "none";
         audioElement.remove();
     };
-
+    
     audioPreviewContainer.appendChild(audioElement);
     audioPreviewContainer.appendChild(deleteButton);
-
-    // Show the preview section
-    audioPreviewContainer.style.display = "block";
 }
-
 
 function handleImageSelect(event) {
     const file = event.target.files[0];
     if (file) {
         const imageUrl = URL.createObjectURL(file);
-
-        // Preview the image inside the input container
-        const inputContainer = document.querySelector(".input-container");
-        inputContainer.innerHTML = ''; // Clear previous content
-
-        // Create an image preview
-        const imgElement = document.createElement("img");
-        imgElement.src = imageUrl;
-        imgElement.classList.add("image-preview");
-
-        // Create a delete button for the image
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "❌";
-        deleteButton.classList.add("delete-image");
-        deleteButton.onclick = () => {
-            inputContainer.innerHTML = '<textarea id="inputText" rows="3" placeholder="Type here..." disabled></textarea>'; // Restore text input
-        };
-
-        inputContainer.appendChild(imgElement);
-        inputContainer.appendChild(deleteButton);
-
-        // Store the selected image URL to send later
-        document.getElementById('inputText').dataset.imageUrl = imageUrl;
+        displayImagePreview(imageUrl);
     }
 }
 
-// Send Message Function
+function displayImagePreview(imageUrl) {
+    const inputContainer = document.querySelector(".input-container");
+    inputContainer.innerHTML = '';
+    
+    const imgElement = document.createElement("img");
+    imgElement.src = imageUrl;
+    imgElement.classList.add("image-preview");
+    
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "❌";
+    deleteButton.onclick = () => inputContainer.innerHTML = '<textarea id="inputText" rows="3" placeholder="Type here..."></textarea>';
+    
+    inputContainer.appendChild(imgElement);
+    inputContainer.appendChild(deleteButton);
+}
+
 async function sendMessage() {
     const inputText = document.getElementById('inputText').value.trim();
     const imageElement = document.querySelector('.input-container img');
     const audioElement = document.querySelector('.input-container audio');
-
-    const imageUrl = imageElement ? imageElement.src : null; // Extract image if present
-    const audioUrl = audioElement ? audioElement.src : null; // Extract audio if present
-
-    if (!inputText && !imageUrl && !audioUrl) return; // Prevent sending empty messages
-
-    // Show user's message
+    
+    const imageUrl = imageElement ? imageElement.src : null;
+    const audioUrl = audioElement ? audioElement.src : null;
+    
+    if (!inputText && !imageUrl && !audioUrl) return;
+    
     addMessage(inputText || "Media message", "user-message", audioUrl, imageUrl);
-
-    // Clear the input field and remove previews after sending
-    document.querySelector(".input-container").innerHTML = '<textarea id="inputText" rows="3" placeholder="Type here..." disabled></textarea>';
-
-    // Prepare API payload (only send text to Bhashini API)
+    document.querySelector(".input-container").innerHTML = '<textarea id="inputText" rows="3" placeholder="Type here..."></textarea>';
+    
     if (inputText) {
-        const payload = {
-            input: [{ source: inputText }],
-            config: {
-                serviceId: "ai4bharat/indictrans-v2",
-                language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode }
-            }
-        };
-
+        const payload = { input: [{ source: inputText }], config: { serviceId: "ai4bharat/indictrans-v2", language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode } } };
+        
         try {
-            const response = await fetch(BHASHINI_API, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${INFERENCE_API_KEY}`,
-                    "udyat-api-key": UDYAT_KEY
-                },
-                body: JSON.stringify(payload)
-            });
-
+            const response = await fetch(BHASHINI_API, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${INFERENCE_API_KEY}`, "udyat-api-key": UDYAT_KEY }, body: JSON.stringify(payload) });
             const data = await response.json();
-
-            if (data.output && data.output[0] && data.output[0].target) {
-                addMessage(data.output[0].target, "bot-message", audioUrl, imageUrl); // Send audio & image if present
-            } else {
-                throw new Error("Invalid response from API");
-            }
+            addMessage(data.output?.[0]?.target || "Error: Invalid response", "bot-message", audioUrl, imageUrl);
         } catch (error) {
             addMessage("Error: Model is not linked. Please try again.", "error-message");
         }
     }
 }
-
-// Initialize UI on Load
-window.onload = () => {
-    document.getElementById('inputText').style.display = 'none';  // Hide input initially
-    document.getElementById('sendButton').disabled = true;  // Disable send button initially
-
-    const inputField = document.getElementById("inputText");
-
-    // Check if input field exists before adding event listener
-    if (inputField) {
-        inputField.addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault(); // Prevents new lines in the input field
-                sendMessage(); // Calls the sendMessage function
-            }
-        });
-    }
-};
