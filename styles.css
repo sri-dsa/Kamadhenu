@@ -315,3 +315,16 @@ body.light-theme .bot-message {
 body.light-theme .user-message {
     background-color: #3399ff; /* Softer blue */
 }
+
+#imagePreview img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+#audioPreview audio {
+    width: 100%;
+    margin-top: 10px;
+}
