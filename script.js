@@ -71,7 +71,7 @@ function addMessage(text, type, audio = null, image = null) {
         label.textContent = `Text in ${selectedLanguageName}`;
         messageWrapper.style.alignSelf = "flex-start"; // Align left
     } else if (type === "error-message") {
-        label.textContent = "Error: Model connection failed. Please try again.";
+        label.textContent = "Error: Translation failed. Please try again.";
         messageWrapper.style.alignSelf = "flex-start"; // Align left
     }
 
@@ -159,6 +159,7 @@ function toggleRecording() {
     isRecording = !isRecording;
 }
 
+// Start Audio Recording
 async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(stream);
@@ -192,9 +193,6 @@ function displayAudioPreview(audioURL) {
 
     audioPreviewContainer.appendChild(audioElement);
     audioPreviewContainer.appendChild(deleteButton);
-
-    // Show the preview section
-    audioPreviewContainer.style.display = "block";
 }
 
 // Handle Image Selection
@@ -252,16 +250,6 @@ async function sendMessage() {
     // Show user's message
     addMessage(inputText, "user-message");
 
-    // Check for image/audio and send accordingly
-    let messageData = {
-        text: inputText,
-        audio: audioURL, // If there's audio, include it
-        image: document.querySelector('#inputText img') ? document.querySelector('#inputText img').src : null // If there's an image in the text input, include it
-    };
-
-    // Clear the input field after sending the message
-    document.getElementById('inputText').value = '';
-
     // Prepare API payload
     const payload = {
         input: [{ source: inputText }],
@@ -270,6 +258,9 @@ async function sendMessage() {
             language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode }
         }
     };
+
+    // Clear the input field after sending the message
+    document.getElementById('inputText').value = '';
 
     try {
         const response = await fetch(BHASHINI_API, {
@@ -285,7 +276,7 @@ async function sendMessage() {
         const data = await response.json();
 
         if (data.output && data.output[0] && data.output[0].target) {
-            addMessage(data.output[0].target, "bot-message", messageData.audio, messageData.image); // Send audio and image if present
+            addMessage(data.output[0].target, "bot-message");
         } else {
             throw new Error("Invalid response from API");
         }
