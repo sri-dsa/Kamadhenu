@@ -158,7 +158,7 @@ async function sendMessage() {
             throw new Error("Invalid response from API");
         }
     } catch (error) {
-        addMessage("Error: Translation failed. Please try again.", "error-message");
+        addMessage("Error: Model is not linked. Please try again.", "error-message");
     }
 }
 
