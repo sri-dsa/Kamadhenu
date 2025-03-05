@@ -70,7 +70,8 @@
 
             <!-- Language Selection Button -->
             <button id="language-button" class="language-button" onclick="toggleLanguageOptions()">Select Language</button>
-
+            <div id="audioPreview" style="display: none; margin-top: 10px;"></div>
+            <div id="imagePreview" style="display: none; margin-top: 10px;"></div>
             <!-- Language Selection Menu (Initially Hidden) -->
             <div id="language-options" class="language-options">
                 <button onclick="setLanguage('ta', 'Tamil')">Tamil</button>
@@ -94,6 +95,7 @@
                 <button onclick="setLanguage('bn', 'Bengali')">Bengali</button>
                 <button onclick="setLanguage('as', 'Assamese')">Assamese</button>
             </div>
+            
 
             <!-- Buttons for Mic, Image Upload, and Send -->
             <div class="button-container">
@@ -105,6 +107,8 @@
             </div>
         </div>
     </div>
+
+    
 
 </body>
 </html>
