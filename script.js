@@ -142,18 +142,20 @@ function playAudio(text, languageCode) {
     speechSynthesis.speak(utterance);
 }
 
-// Start/Stop Recording Audio
 function toggleRecording() {
     const inputField = document.getElementById('inputText');
+    const audioPreviewContainer = document.getElementById('audioPreview');
+
     if (isRecording) {
         mediaRecorder.stop();
         inputField.disabled = false;
-        document.getElementById('audioPreview').style.display = "none";
+        audioPreviewContainer.style.display = "none";  // Hide preview when stopped
     } else {
         startRecording();
         inputField.disabled = true;
-        document.getElementById('audioPreview').style.display = "block";
+        audioPreviewContainer.style.display = "block";  // Show preview while recording
     }
+
     isRecording = !isRecording;
 }
 
@@ -167,19 +169,39 @@ async function startRecording() {
     mediaRecorder.onstop = () => {
         audioBlob = new Blob(audioChunks, { type: "audio/wav" });
         audioURL = URL.createObjectURL(audioBlob);
-        addMessage("Audio recorded", "user-message", audioURL);
+        displayAudioPreview(audioURL);
     };
 
     mediaRecorder.start();
 }
+// Display Audio Preview
+function displayAudioPreview(audioURL) {
+    const audioPreviewContainer = document.getElementById('audioPreview');
+    audioPreviewContainer.innerHTML = '';  // Clear any previous content
 
-// Handle Image Input
-function openImageInput() {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = handleImageSelect;
-    input.click();
+    const audioElement = document.createElement("audio");
+    audioElement.controls = true;
+    audioElement.src = audioURL;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "❌";
+    deleteButton.classList.add("delete-audio");
+    deleteButton.onclick = () => {
+        audioPreviewContainer.style.display = "none";
+        audioElement.remove();
+    };
+
+    audioPreviewContainer.appendChild(audioElement);
+    audioPreviewContainer.appendChild(deleteButton);
+}
+
+// Handle Image Selection
+function handleImageSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        displayImagePreview(imageUrl);
+    }
 }
 
 // Handle Image Selection
@@ -189,6 +211,30 @@ function handleImageSelect(event) {
         const imageUrl = URL.createObjectURL(file);
         addMessage("Image selected", "user-message", null, imageUrl);
     }
+}
+
+// Display Image Preview
+function displayImagePreview(imageUrl) {
+    const imagePreviewContainer = document.getElementById('imagePreview');
+    imagePreviewContainer.innerHTML = '';  // Clear any previous content
+
+    const imgElement = document.createElement("img");
+    imgElement.src = imageUrl;
+    imgElement.classList.add("image-preview");
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "❌";
+    deleteButton.classList.add("delete-image");
+    deleteButton.onclick = () => {
+        imagePreviewContainer.style.display = "none";
+        imgElement.remove();
+    };
+
+    imagePreviewContainer.appendChild(imgElement);
+    imagePreviewContainer.appendChild(deleteButton);
+
+    // Show the preview section
+    imagePreviewContainer.style.display = "block";
 }
 
 // Remove Image
