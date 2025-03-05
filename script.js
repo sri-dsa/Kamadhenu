@@ -197,100 +197,85 @@ function displayAudioPreview(audioURL) {
     audioPreviewContainer.style.display = "block";
 }
 
-// Handle Image Selection
+
 function handleImageSelect(event) {
     const file = event.target.files[0];
     if (file) {
         const imageUrl = URL.createObjectURL(file);
-        displayImagePreview(imageUrl);
+
+        // Preview the image inside the input container
+        const inputContainer = document.querySelector(".input-container");
+        inputContainer.innerHTML = ''; // Clear previous content
+
+        // Create an image preview
+        const imgElement = document.createElement("img");
+        imgElement.src = imageUrl;
+        imgElement.classList.add("image-preview");
+
+        // Create a delete button for the image
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "❌";
+        deleteButton.classList.add("delete-image");
+        deleteButton.onclick = () => {
+            inputContainer.innerHTML = '<textarea id="inputText" rows="3" placeholder="Type here..." disabled></textarea>'; // Restore text input
+        };
+
+        inputContainer.appendChild(imgElement);
+        inputContainer.appendChild(deleteButton);
+
+        // Store the selected image URL to send later
+        document.getElementById('inputText').dataset.imageUrl = imageUrl;
     }
-}
-
-// Handle Image Selection
-function handleImageSelect(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        addMessage("Image selected", "user-message", null, imageUrl);
-    }
-}
-
-// Display Image Preview
-function displayImagePreview(imageUrl) {
-    const imagePreviewContainer = document.getElementById('imagePreview');
-    imagePreviewContainer.innerHTML = '';  // Clear any previous content
-
-    const imgElement = document.createElement("img");
-    imgElement.src = imageUrl;
-    imgElement.classList.add("image-preview");
-
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "❌";
-    deleteButton.classList.add("delete-image");
-    deleteButton.onclick = () => {
-        imagePreviewContainer.style.display = "none";
-        imgElement.remove();
-    };
-
-    imagePreviewContainer.appendChild(imgElement);
-    imagePreviewContainer.appendChild(deleteButton);
-
-    // Show the preview section
-    imagePreviewContainer.style.display = "block";
-}
-
-// Remove Image
-function removeImage(imgElement) {
-    imgElement.parentElement.removeChild(imgElement);
 }
 
 // Send Message Function
 async function sendMessage() {
     const inputText = document.getElementById('inputText').value.trim();
-    if (!inputText) return;
+    const imageElement = document.querySelector('.input-container img');
+    const audioElement = document.querySelector('.input-container audio');
+
+    const imageUrl = imageElement ? imageElement.src : null; // Extract image if present
+    const audioUrl = audioElement ? audioElement.src : null; // Extract audio if present
+
+    if (!inputText && !imageUrl && !audioUrl) return; // Prevent sending empty messages
 
     // Show user's message
-    addMessage(inputText, "user-message");
+    addMessage(inputText || "Media message", "user-message", audioUrl, imageUrl);
 
-    // Check for image/audio and send accordingly
-    let messageData = {
-        text: inputText,
-        audio: audioURL, // If there's audio, include it
-        image: document.querySelector('#inputText img') ? document.querySelector('#inputText img').src : null // If there's an image in the text input, include it
-    };
+    // Clear the input field and remove previews after sending
+    document.querySelector(".input-container").innerHTML = '<textarea id="inputText" rows="3" placeholder="Type here..." disabled></textarea>';
 
-    // Clear the input field after sending the message
-    document.getElementById('inputText').value = '';
+    // Prepare API payload (only send text to Bhashini API)
+    if (inputText) {
+        const payload = {
+            input: [{ source: inputText }],
+            config: {
+                serviceId: "ai4bharat/indictrans-v2",
+                language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode }
+            }
+        };
 
-    // Prepare API payload
-    const payload = {
-        input: [{ source: inputText }],
-        config: {
-            serviceId: "ai4bharat/indictrans-v2",
-            language: { sourceLanguage: "hi", targetLanguage: selectedLanguageCode }
+        try {
+            const response = await fetch(BHASHINI_API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${INFERENCE_API_KEY}`,
+                    "udyat-api-key": UDYAT_KEY
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (data.output && data.output[0] && data.output[0].target) {
+                addMessage(data.output[0].target, "bot-message", audioUrl, imageUrl); // Send audio & image if present
+            } else {
+                throw new Error("Invalid response from API");
+            }
+        } catch (error) {
+            addMessage("Error: Model is not linked. Please try again.", "error-message");
         }
-    };
-
-    try {
-        const response = await fetch(BHASHINI_API, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${INFERENCE_API_KEY}`,
-                "udyat-api-key": UDYAT_KEY
-            },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (data.output && data.output[0] && data.output[0].target) {
-            addMessage(data.output[0].target, "bot-message", messageData.audio, messageData.image); // Send audio and image if present
-        } else {
-            throw new Error("Invalid response from API");
-        }
-    } catch (error) {
-        addMessage("Error: Model is not linked. Please try again.", "error-message");
     }
 }
 
